@@ -35,6 +35,7 @@ ext['jackson.version'] = '2.7.1'
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-jdbc')
+	compile('org.springframework.boot:spring-boot-devtools')
 	compile('cz.jirutka.spring:spring-data-jdbc-repository:0.5.1')
 
 	compile("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
