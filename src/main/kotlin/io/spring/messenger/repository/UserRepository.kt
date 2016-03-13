@@ -10,7 +10,12 @@ import org.springframework.stereotype.Repository
 import java.sql.ResultSet
 
 @Repository
-open class UserRepository : JdbcRepository<User, String>(UserRowMaper(), UserRowUnmapper(), "\"users\"") {
+open class UserRepository : JdbcRepository<User, String>(UserRowMaper(), UserRowUnmapper(), "\"users\"", "user_name") {
+
+    open fun updateLocation(userName:String, location: Point): Unit {
+        location.srid = 4326
+        jdbcOperations.update("UPDATE \"users\" SET location = '${PGgeometry(location)}' WHERE user_name = '$userName'")
+    }
 
     class UserRowMaper : RowMapper<User> {
         override fun mapRow(rs: ResultSet, rowNum: Int)
@@ -34,5 +39,7 @@ open class UserRepository : JdbcRepository<User, String>(UserRowMaper(), UserRow
             return map;
         }
     }
+
+
 
 }
