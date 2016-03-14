@@ -18,7 +18,7 @@ open class UserRepository : JdbcRepository<User, String>(UserRowMaper(), UserRow
         jdbcOperations.update("UPDATE ${table.name} SET location = '${PGgeometry(location)}' WHERE user_name = '$userName'")
     }
 
-    open fun findByBoundingBox(userName:String, box: PGbox2d): List<User>
+    open fun findByBoundingBox(box: PGbox2d): List<User>
         = jdbcOperations.query("""SELECT * FROM ${table.name}
                                   WHERE location &&
                                   ST_MakeEnvelope(${box.llb.x}, ${box.llb.y}, ${box.urt.x}, ${box.urt.y}

@@ -24,8 +24,8 @@ class UserController @Autowired constructor(val repository: UserRepository) {
     /**
      * {@code box} parameter should use this format: xmin%20ymin,xmax%20ymax
      */
-    @GetMapping("/{userName}/bbox/{box}")
+    @GetMapping("/bbox/{box}")
     fun findByBoundingBox(@PathVariable userName:String, @PathVariable box:String)
-            = repository.findByBoundingBox(userName, PGbox2d("BOX($box)"))
+            = repository.findByBoundingBox(PGbox2d("BOX($box)"))
 
 }
