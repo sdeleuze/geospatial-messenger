@@ -3,6 +3,7 @@ package io.spring.messenger.repository
 import com.nurkiewicz.jdbcrepository.JdbcRepository
 import com.nurkiewicz.jdbcrepository.RowUnmapper
 import io.spring.messenger.domain.User
+import org.postgis.PGbox2d
 import org.postgis.PGgeometry
 import org.postgis.Point
 import org.springframework.jdbc.core.RowMapper
@@ -14,8 +15,14 @@ open class UserRepository : JdbcRepository<User, String>(UserRowMaper(), UserRow
 
     open fun updateLocation(userName:String, location: Point): Unit {
         location.srid = 4326
-        jdbcOperations.update("UPDATE \"users\" SET location = '${PGgeometry(location)}' WHERE user_name = '$userName'")
+        jdbcOperations.update("UPDATE ${table.name} SET location = '${PGgeometry(location)}' WHERE user_name = '$userName'")
     }
+
+    open fun findByBoundingBox(userName:String, box: PGbox2d): List<User>
+        = jdbcOperations.query("""SELECT * FROM ${table.name}
+                                  WHERE location &&
+                                  ST_MakeEnvelope(${box.llb.x}, ${box.llb.y}, ${box.urt.x}, ${box.urt.y}
+                                  , 4326)""", rowMapper)
 
     class UserRowMaper : RowMapper<User> {
         override fun mapRow(rs: ResultSet, rowNum: Int)
