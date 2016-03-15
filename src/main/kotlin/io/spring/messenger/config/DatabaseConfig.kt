@@ -24,22 +24,21 @@ open class DatabaseConfig {
 
     @Bean
 	open fun init(userRepository: UserRepository, messageRepository: MessageRepository) = CommandLineRunner {
-        val jbauer = User("jbauer", "Jack", "Bauer")
-        val cobrian = User("cobrian", "Chloe", "O'Brian")
-        val kbauer = User("kbauer", "Kim", "Bauer")
-        val dpalmer = User("dpalmer", "David", "Palmer")
-        val mdessler = User("mdessler", "Michelle", "Dessler")
+        val swhite = User("swhite", "Skyler", "White")
+        val jpinkman = User("jpinkman", "Jesse", "Pinkman")
+        val walter = User("wwhite", "Walter", "White")
+        val sgoodman = User("sgoodman", "Saul", "Goodman")
+
 
         if(userRepository.count() == 0L) {
-            userRepository.create(jbauer)
-            userRepository.create(cobrian)
-            userRepository.create(kbauer)
-            userRepository.create(dpalmer)
-            userRepository.create(mdessler)
+            userRepository.create(swhite)
+            userRepository.create(jpinkman)
+            userRepository.create(walter)
+            userRepository.create(sgoodman)
         }
 
         if(messageRepository.count() == 0L) {
-            messageRepository.create(Message("This is a test!", jbauer))
+            messageRepository.create(Message("This is a test!", swhite.userName))
         }
     }
 

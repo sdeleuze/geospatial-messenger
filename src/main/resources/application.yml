@@ -1,3 +1,6 @@
+logging:
+  level:
+    org.springframework.web: DEBUG
 spring:
   datasource:
     platform: "postgis"
