@@ -6,19 +6,10 @@ var view = new ol.View({
     zoom: 8
 });
 
-var container = document.getElementById('popup');
-var content = document.getElementById('popup-content');
-
-var overlay = new ol.Overlay(({
-    element: container, autoPan: true, autoPanAnimation: {
-        duration: 250
-    }
-}));
-
 var map = new ol.Map({
     layers: [new ol.layer.Tile({
         source: new ol.source.MapQuest({layer: 'osm'})
-    })], target: 'map', overlays: [overlay], controls: ol.control.defaults({
+    })], target: 'map', controls: ol.control.defaults({
         attributionOptions: ({
             collapsible: false
         })
@@ -62,13 +53,27 @@ map.on('singleclick', function (evt) {
     var coordinate = evt.coordinate;
     var hdms = ol.coordinate.toStringHDMS(ol.proj.transform(coordinate, 'EPSG:3857', 'EPSG:4326'));
     var message = '<p>You clicked here:</p><code>' + hdms + '</code>';
-    content.innerHTML = message;
-    overlay.setPosition(coordinate);
-    $.ajax({
-        method: "POST",
-        url: "/message",
-        data: JSON.stringify({content: message, author: userName, location: {type: "Point", coordinates:[coordinate[0],coordinate[1]]}}),
-        contentType:"application/json; charset=utf-8",
-        dataType:"json"
-    });
+
+    var container = document.createElement("div");
+    container.className = "ol-popup";
+    //var content = document.createElement("div");
+    //container.appendChild(content);
+    //content.innerHTML = message;
+    var popup = new ol.Overlay(({
+        element: container, autoPan: true, autoPanAnimation: {
+            duration: 250
+        }
+    }));
+    map.addOverlay(popup)
+    popup.setPosition(coordinate);
+    $(container).editable(function(value, settings) {
+        $.ajax({
+            method: "POST",
+            url: "/message",
+            data: JSON.stringify({content: value, author: userName, location: {type: "Point", coordinates:[coordinate[0],coordinate[1]]}}),
+            contentType:"application/json; charset=utf-8",
+            dataType:"json"});
+        return value;
+    }, { type : 'textarea', submit: 'OK'});
+
 });
