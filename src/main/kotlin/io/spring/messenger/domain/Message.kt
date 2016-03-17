@@ -7,5 +7,6 @@ data class Message(
         var content: String,
         var author: String,
         var location: Point? = null,
-        @Id var id: Long? = null
+        @Id var id: Int? = null
 )
+

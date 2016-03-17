@@ -37,6 +37,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-jdbc')
 	compile('org.springframework.boot:spring-boot-devtools')
 	compile('cz.jirutka.spring:spring-data-jdbc-repository:0.5.1')
+	compile('org.jetbrains.exposed:exposed:0.4-SNAPSHOT')
 
 	compile("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
 	// Always use the latest "dash revision", here -2

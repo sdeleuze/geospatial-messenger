@@ -15,15 +15,16 @@ class UserController @Autowired constructor(val repository: UserRepository) {
     fun findAll() = repository.findAll()
 
     @PostMapping
-    fun create(@RequestBody user: User) = repository.create(user)
+    fun create(@RequestBody u: User) = repository.create(u)
 
     @PutMapping("/{userName}/location/{x},{y}") @ResponseStatus(NO_CONTENT)
     fun updateLocation(@PathVariable userName:String, @PathVariable x: Double, @PathVariable y: Double)
             = repository.updateLocation(userName, Point(x, y))
 
     @GetMapping("/bbox/{xMin},{yMin},{xMax},{yMax}")
-    fun findByBoundingBox(@PathVariable userName:String, @PathVariable xMin:Double,
-                          @PathVariable yMin:Double, @PathVariable xMax:Double, @PathVariable yMax:Double)
+    fun findByBoundingBox(@PathVariable userName:String,
+                          @PathVariable xMin:Double, @PathVariable yMin:Double,
+                          @PathVariable xMax:Double, @PathVariable yMax:Double)
             = repository.findByBoundingBox(PGbox2d(Point(xMin, yMin), Point(xMax, yMax)))
 
 }

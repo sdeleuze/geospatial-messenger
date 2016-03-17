@@ -38,7 +38,7 @@ var centerDefined = false;
 geolocation.on("change:position", function () {
     var coordinates = geolocation.getPosition();
     $.ajax({
-        url: "/user/" + $('#select-user').val() + "swhite/location/" + coordinates[0] + "," + coordinates[1], type: "PUT"
+        url: "/user/" + $('#select-user').val() + "/location/" + coordinates[0] + "," + coordinates[1], type: "PUT"
     });
     if (!centerDefined) {
         view.setCenter(coordinates);
