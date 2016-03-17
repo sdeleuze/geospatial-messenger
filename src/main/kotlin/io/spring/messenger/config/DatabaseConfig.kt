@@ -4,7 +4,6 @@ import io.spring.messenger.domain.Message
 import io.spring.messenger.domain.User
 import io.spring.messenger.repository.*
 import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.exists
 import org.springframework.boot.CommandLineRunner
 import javax.sql.DataSource
@@ -26,8 +25,6 @@ open class DatabaseConfig {
         val sgoodman = User("sgoodman", "Saul", "Goodman")
 
         db.transaction {
-            logger.addLogger(StdOutSqlLogger())
-
             if(!Users.exists()) {
                 create(Users)
                 userRepository.create(swhite)
@@ -35,7 +32,6 @@ open class DatabaseConfig {
                 userRepository.create(walter)
                 userRepository.create(sgoodman)
             }
-
             if(!Messages.exists()) {
                 create(Messages)
                 messageRepository.create(Message("This is a test!", swhite.userName))

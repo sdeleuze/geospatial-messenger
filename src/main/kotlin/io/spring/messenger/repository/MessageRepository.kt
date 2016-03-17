@@ -20,7 +20,7 @@ open class MessageRepository @Autowired constructor(val db: Database) {
     }
 
     open fun findByBoundingBox(box: PGbox2d) = db.transaction {
-        unmap(Messages.select { Users.location within box })
+        unmap(Messages.select { Messages.location within box })
     }
 
     private fun map(m: Message): Messages.(UpdateBuilder<*>) -> Unit = {

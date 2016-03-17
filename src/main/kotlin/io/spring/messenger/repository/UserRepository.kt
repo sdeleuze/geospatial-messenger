@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository
 open class UserRepository @Autowired constructor(val db: Database) {
 
     open fun updateLocation(userName:String, location: Point) = db.transaction {
-        logger.addLogger(StdOutSqlLogger())
         location.srid = 4326
         Users.update({Users.userName eq userName}) { it[Users.location] = location}
     }

@@ -22,8 +22,7 @@ class UserController @Autowired constructor(val repository: UserRepository) {
             = repository.updateLocation(userName, Point(x, y))
 
     @GetMapping("/bbox/{xMin},{yMin},{xMax},{yMax}")
-    fun findByBoundingBox(@PathVariable userName:String,
-                          @PathVariable xMin:Double, @PathVariable yMin:Double,
+    fun findByBoundingBox(@PathVariable xMin:Double, @PathVariable yMin:Double,
                           @PathVariable xMax:Double, @PathVariable yMax:Double)
             = repository.findByBoundingBox(PGbox2d(Point(xMin, yMin), Point(xMax, yMax)))
 
