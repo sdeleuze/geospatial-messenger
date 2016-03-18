@@ -28,7 +28,7 @@ var geolocation = new ol.Geolocation({
     projection: view.getProjection()
 });
 geolocation.on("error", function (error) {
-    alert(error.message);
+    alert("Geolocation error: " + error.message);
 });
 var positionFeature = new ol.Feature();
 positionFeature.setStyle(new ol.style.Style({
@@ -55,18 +55,19 @@ geolocation.setTracking(true);
 
 // ################################# Popup #################################
 
+var container = document.getElementById('popup');
+
+var popup = new ol.Overlay(({
+    element: container,
+    autoPan: true,
+    autoPanAnimation: {
+        duration: 250
+    }
+}));
+map.addOverlay(popup)
+
 map.on('singleclick', function (evt) {
     var coordinate = evt.coordinate;
-    var container = document.createElement("div");
-    container.className = "ol-popup";
-    var popup = new ol.Overlay(({
-        element: container,
-        autoPan: true,
-        autoPanAnimation: {
-            duration: 250
-        }
-    }));
-    map.addOverlay(popup)
     popup.setPosition(coordinate);
     $(container).editable(function(value, settings) {
         $.ajax({
@@ -75,6 +76,7 @@ map.on('singleclick', function (evt) {
             data: JSON.stringify({content: value, author: $('#select-user').val(), location: {type: "Point", coordinates:[coordinate[0],coordinate[1]]}}),
             contentType: "application/json; charset=utf-8",
             dataType: "json"});
+        popup.setPosition(undefined);
         return value;
     }, {
         type : "textarea",
@@ -82,3 +84,35 @@ map.on('singleclick', function (evt) {
     });
 
 });
+
+// ################################# Messages layer #################################
+
+var vectorSource = new ol.source.Vector({
+        loader: function(extent, resolution, projection) {
+          var url = '/message/bbox/' + extent[0] + "," + extent[1] + "," + extent[2] + "," + extent[3];
+          $.ajax({url: url, dataType: 'json', success: function(response) {
+            if (response.error) {
+              alert(response.error.message + '\n' +
+                  response.error.details.join('\n'));
+            } else {
+                $.each(response, function( index, value ) {
+                    var feature = new ol.Feature({
+                        geometry: new ol.geom.Point(value.location.coordinates),
+                        data: value
+                    });
+                    vectorSource.addFeature(feature);
+            });
+            }
+          }});
+        },
+        strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
+          tileSize: 512
+        }))
+      });
+
+var vector = new ol.layer.Vector({
+    source: vectorSource,
+    style: new ol.style.Style({image: new ol.style.Icon({src: "pig.png", scale: 0.15})}),
+});
+
+map.addLayer(vector);
