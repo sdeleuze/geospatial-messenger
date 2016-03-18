@@ -55,21 +55,42 @@ geolocation.setTracking(true);
 
 // ################################# Popup #################################
 
-var container = document.getElementById('popup');
+var element = document.getElementById('popup');
 
-var popup = new ol.Overlay(({
-    element: container,
-    autoPan: true,
-    autoPanAnimation: {
-        duration: 250
-    }
-}));
-map.addOverlay(popup)
+var popup = new ol.Overlay({
+        element: element,
+        positioning: 'bottom-center'
+});
+map.addOverlay(popup);
 
-map.on('singleclick', function (evt) {
+// display popup on click
+map.on('click', function(evt) {
     var coordinate = evt.coordinate;
-    popup.setPosition(coordinate);
-    $(container).editable(function(value, settings) {
+    var feature = map.forEachFeatureAtPixel(evt.pixel,
+        function(feature) {
+          return feature;
+    });
+
+    $(element).popover('destroy');
+    if (feature) {
+      popup.setPosition(coordinate);
+      $(element).popover({
+        'placement': 'top',
+        'html': true,
+        'content': feature.get('content'),
+        'animation': false
+      });
+      $(element).popover('show');
+    } else {
+        popup.setPosition(coordinate);
+      $(element).popover({
+        'placement': 'top',
+        'html': true,
+        'title': "New message",
+        'animation': false
+      }).data('bs.popover').tip().width(300).height(300).append("<div id='message' style='height:70%'/>");
+      $(element).popover('show');
+        $("#message").editable(function(value, settings) {
         $.ajax({
             method: "POST",
             url: "/message",
@@ -82,7 +103,7 @@ map.on('singleclick', function (evt) {
         type : "textarea",
         submit: "OK"
     });
-
+    }
 });
 
 // ################################# Messages layer #################################
@@ -98,7 +119,8 @@ var vectorSource = new ol.source.Vector({
                 $.each(response, function( index, value ) {
                     var feature = new ol.Feature({
                         geometry: new ol.geom.Point(value.location.coordinates),
-                        data: value
+                        content: value.content,
+                        author: value.author
                     });
                     vectorSource.addFeature(feature);
             });
@@ -112,7 +134,22 @@ var vectorSource = new ol.source.Vector({
 
 var vector = new ol.layer.Vector({
     source: vectorSource,
-    style: new ol.style.Style({image: new ol.style.Icon({src: "pig.png", scale: 0.15})}),
+    style: new ol.style.Style({image: new ol.style.Icon({src: "pig.png", scale: 0.1})}),
 });
 
 map.addLayer(vector);
+
+
+// ############################## SSE for message push ##############################
+
+var source = new EventSource("/message/subscribe");
+
+source.addEventListener('message', function(e) {
+  var message = $.parseJSON(e.data);
+  var feature = new ol.Feature({
+                        geometry: new ol.geom.Point(message.location.coordinates),
+                        content: message.content,
+                        author: message.author
+                    });
+  vectorSource.addFeature(feature);
+}, false);
