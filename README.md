@@ -32,6 +32,8 @@ It is used as a playground to demonstrate various features:
  - Run it within your IDE or with `./gradlew bootRun`
  - Open `http://localhost:8080/` in your browser, documentation should be available at `http://localhost:8080/docs/index.html` when run from the JAR.
  
+![Screenshot](/screenshot.png?raw=true)
+ 
 ## Improvements I have in mind
  - [Exposed issue #24](https://github.com/JetBrains/Exposed/issues/24): see if Exposed could support natively data classes + repository patten.
  - [Exposed issue #25](https://github.com/JetBrains/Exposed/issues/25): allow to support SQL transaction with `@Transactional`.
