@@ -88,6 +88,7 @@ map.on('click', function(evt) {
         'html': true,
         'title': "New message",
         'animation': false
+         
       }).data('bs.popover').tip().width(300).height(300).append("<div id='message' style='height:70%'/>");
       $(element).popover('show');
         $("#message").editable(function(value, settings) {
