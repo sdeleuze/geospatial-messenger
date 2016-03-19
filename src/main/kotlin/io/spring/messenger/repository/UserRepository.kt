@@ -1,6 +1,8 @@
 package io.spring.messenger.repository
 
+import io.spring.messenger.Users
 import io.spring.messenger.domain.User
+import io.spring.messenger.within
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import org.postgis.PGbox2d
@@ -11,13 +13,17 @@ import org.springframework.stereotype.Repository
 @Repository
 open class UserRepository @Autowired constructor(val db: Database) {
 
-    open fun updateLocation(userName:String, location: Point) = db.transaction {
-        location.srid = 4326
-        Users.update({Users.userName eq userName}) { it[Users.location] = location}
+    open fun createTable() = db.transaction {
+        create(Users)
     }
 
     open fun create(user: User) = db.transaction {
         Users.insert( map(user) )
+    }
+
+    open fun updateLocation(userName:String, location: Point) = db.transaction {
+        location.srid = 4326
+        Users.update({Users.userName eq userName}) { it[Users.location] = location}
     }
 
     open fun findAll() = db.transaction {
@@ -26,6 +32,10 @@ open class UserRepository @Autowired constructor(val db: Database) {
 
     open fun findByBoundingBox(box: PGbox2d) = db.transaction {
         unmap(Users.select { Users.location within box })
+    }
+
+    open fun deleteAll() = db.transaction {
+        Users.deleteAll()
     }
 
     private fun map(u: User): Users.(UpdateBuilder<*>) -> Unit = {

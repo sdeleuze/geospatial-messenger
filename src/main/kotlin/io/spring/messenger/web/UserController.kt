@@ -11,11 +11,9 @@ import org.springframework.web.bind.annotation.*
 @RestController @RequestMapping("/user")
 class UserController @Autowired constructor(val repository: UserRepository) {
 
-    @GetMapping
-    fun findAll() = repository.findAll()
+    @GetMapping fun findAll() = repository.findAll()
 
-    @PostMapping
-    fun create(@RequestBody u: User) = repository.create(u)
+    @PostMapping fun create(@RequestBody u: User) = repository.create(u)
 
     @PutMapping("/{userName}/location/{x},{y}") @ResponseStatus(NO_CONTENT)
     fun updateLocation(@PathVariable userName:String, @PathVariable x: Double, @PathVariable y: Double)
