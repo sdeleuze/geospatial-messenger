@@ -5,6 +5,7 @@ import io.spring.messenger.repository.MessageRepository
 import org.postgis.PGbox2d
 import org.postgis.Point
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus.*
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
 
@@ -14,14 +15,15 @@ class MessageController @Autowired constructor(val repository: MessageRepository
 
     val broadcaster = SseBroadcaster()
 
-    @PostMapping
-    fun create(@RequestBody message: Message) {
-        repository.create(message)
-        broadcaster.send(message)
+    @PostMapping @ResponseStatus(CREATED)
+    fun create(@RequestBody message: Message): Message {
+        val m = repository.create(message)
+        broadcaster.send(m)
+        return m
     }
 
     @GetMapping
-    fun findMessages() = repository.findAll()
+    fun list() = repository.findAll()
 
     @GetMapping("/bbox/{xMin},{yMin},{xMax},{yMax}")
     fun findByBoundingBox(@PathVariable xMin:Double, @PathVariable yMin:Double,

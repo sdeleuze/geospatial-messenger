@@ -11,17 +11,18 @@ import org.springframework.web.bind.annotation.*
 @RestController @RequestMapping("/user")
 class UserController @Autowired constructor(val repository: UserRepository) {
 
-    @GetMapping fun findAll() = repository.findAll()
+    @PostMapping @ResponseStatus(CREATED)
+    fun create(@RequestBody u: User) { repository.create(u) }
 
-    @PostMapping fun create(@RequestBody u: User) = repository.create(u)
-
-    @PutMapping("/{userName}/location/{x},{y}") @ResponseStatus(NO_CONTENT)
-    fun updateLocation(@PathVariable userName:String, @PathVariable x: Double, @PathVariable y: Double)
-            = repository.updateLocation(userName, Point(x, y))
+    @GetMapping
+    fun list() = repository.findAll()
 
     @GetMapping("/bbox/{xMin},{yMin},{xMax},{yMax}")
     fun findByBoundingBox(@PathVariable xMin:Double, @PathVariable yMin:Double,
                           @PathVariable xMax:Double, @PathVariable yMax:Double)
             = repository.findByBoundingBox(PGbox2d(Point(xMin, yMin), Point(xMax, yMax)))
 
+    @PutMapping("/{userName}/location/{x},{y}") @ResponseStatus(NO_CONTENT)
+    fun updateLocation(@PathVariable userName:String, @PathVariable x: Double, @PathVariable y: Double)
+            = repository.updateLocation(userName, Point(x, y))
 }

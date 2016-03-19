@@ -1,0 +1,180 @@
+= Geospatial Messenger Getting Started Guide
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+[introduction]
+= Introduction
+
+Geospatial Messenger provides a RESTful API for users and messages.
+
+[[overview]]
+= Overview
+
+[[overview-http-verbs]]
+== HTTP verbs
+Person-service tries to adhere as closely as possible to standard HTTP and REST conventions in its
+use of HTTP verbs.
+|===
+| Verb | Usage
+
+| `GET`
+| Used to retrieve a resource
+
+| `POST`
+| Used to create a new resource
+
+| `PUT`
+| Used to update an existing resource, full updates only
+
+| `DELETE`
+| Used to delete an existing resource
+|===
+
+[[overview-http-status-codes]]
+== HTTP status codes
+Person-service tries to adhere as closely as possible to standard HTTP and REST conventions in its
+use of HTTP status codes.
+
+|===
+| Status code | Usage
+
+| `200 OK`
+| Standard response for successful HTTP requests.
+| The actual response will depend on the request method used.
+| In a GET request, the response will contain an entity corresponding to the requested resource.
+| In a POST request, the response will contain an entity describing or containing the result of the action.
+
+| `201 Created`
+| The request has been fulfilled and resulted in a new resource being created.
+
+| `204 No Content`
+| The server successfully processed the request, but is not returning any content.
+
+| `400 Bad Request`
+| The server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing).
+
+| `404 Not Found`
+| The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible.
+|===
+
+[[resources]]
+= Resources
+
+
+[[resources-user]]
+== User
+The User resource is used to create, modify and list users.
+
+[[resource-user-list]]
+
+[[resource-user-create]]
+=== Creating user
+A `POST` request creates a new user.
+
+==== Example request
+
+include::{snippets}/create-user/curl-request.adoc[]
+
+==== Example response
+
+include::{snippets}/create-user/http-response.adoc[]
+
+[[resource-user-update-location]]
+=== Updating user's location
+This `PUT` request updates the user's location.
+
+==== Example request
+
+include::{snippets}/update-user-location/curl-request.adoc[]
+
+==== Example response
+
+include::{snippets}/update-user-location/http-response.adoc[]
+
+[[resource-user-list]]
+=== Listing users
+A `GET` request lists all of the users.
+
+include::{snippets}/list-users/response-fields.adoc[]
+
+==== Example request
+
+include::{snippets}/list-users/curl-request.adoc[]
+
+==== Example response
+
+include::{snippets}/list-users/http-response.adoc[]
+
+[[resource-user-find-by-bounding-box]]
+=== Find users by bounding box
+This `GET` request lists all the users within the provided bounding box.
+
+include::{snippets}/find-users-by-bounding-box/response-fields.adoc[]
+
+==== Example request
+
+include::{snippets}/find-users-by-bounding-box/curl-request.adoc[]
+
+==== Example response
+
+include::{snippets}/find-users-by-bounding-box/http-response.adoc[]
+
+
+
+[[resources-message]]
+== Message
+The Message resource is used to create, modify and list messages.
+
+[[resource-message-create]]
+=== Creating message
+A `POST` request creates a new message.
+
+==== Example request
+
+include::{snippets}/create-message/curl-request.adoc[]
+
+==== Example response
+
+include::{snippets}/create-message/http-response.adoc[]
+
+
+[[resource-message-list]]
+=== Listing messages
+A `GET` request lists all of the messages.
+
+include::{snippets}/list-messages/response-fields.adoc[]
+
+==== Example request
+
+include::{snippets}/list-messages/curl-request.adoc[]
+
+==== Example response
+
+include::{snippets}/list-messages/http-response.adoc[]
+
+
+[[resource-message-find-by-bounding-box]]
+=== Find messages by bounding box
+This `GET` request lists all the messages within the provided bounding box.
+
+include::{snippets}/find-messages-by-bounding-box/response-fields.adoc[]
+
+==== Example request
+
+include::{snippets}/find-messages-by-bounding-box/curl-request.adoc[]
+
+==== Example response
+
+include::{snippets}/find-messages-by-bounding-box/http-response.adoc[]
+
+[[resource-message-subscribe]]
+=== Receive new messages
+A SSE endpoint that received all the new messages.
+
+include::{snippets}/subscribe-messages/curl-request.adoc[]
+
+

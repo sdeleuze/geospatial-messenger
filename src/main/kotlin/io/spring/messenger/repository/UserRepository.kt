@@ -17,8 +17,10 @@ open class UserRepository @Autowired constructor(val db: Database) {
         create(Users)
     }
 
-    open fun create(user: User) = db.transaction {
-        Users.insert( map(user) )
+    open fun create(user: User) {
+        db.transaction {
+            Users.insert( map(user) )
+        }
     }
 
     open fun updateLocation(userName:String, location: Point) = db.transaction {

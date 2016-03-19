@@ -12,22 +12,29 @@ buildscript {
   }
 }
 
+plugins {
+    id "org.asciidoctor.convert" version "1.5.2"
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'spring-boot'
+
 repositories {
   mavenCentral()
   maven { url 'http://repo.spring.io/snapshot' }
   maven { url 'https://dl.bintray.com/sdeleuze/maven/' }
 }
 
-apply plugin: 'kotlin'
-apply plugin: 'spring-boot' 
-
 jar {
   baseName = 'geospatial-messenger'
   version = '1.0.0-SNAPSHOT'
+  dependsOn asciidoctor
+    from ("${asciidoctor.outputDir}/html5") {
+        into 'static/docs'
+    }
 }
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
+ext['snippetsDir'] = file('build/generated-snippets')
 ext['spring.version'] = '4.3.0.BUILD-SNAPSHOT'
 ext['jackson.version'] = '2.7.1'
 
@@ -56,8 +63,22 @@ dependencies {
   compile('com.github.mayconbordin:postgis-geojson:1.1')
 
   testCompile('org.springframework.boot:spring-boot-starter-test')
+  testCompile('org.springframework.restdocs:spring-restdocs-mockmvc:1.0.1.RELEASE')
 }
 
 task wrapper(type: Wrapper) {
   gradleVersion = '2.12'
+}
+
+
+test {
+    outputs.dir snippetsDir
+}
+
+asciidoctor {
+    attributes 'snippets': snippetsDir
+    inputs.dir snippetsDir
+    outputDir "build/asciidoc"
+    dependsOn test
+    sourceDir 'src/main/asciidoc'
 }
