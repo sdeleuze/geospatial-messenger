@@ -1,4 +1,5 @@
 This is a sample application that demonstrates how to build a Kotlin + Spring Boot applications with a PostgreSQL database.
+The code is very concise, and the generated application is a 18 MBytes self-contained executable jar with low memory consumption.
 
 It is used as a playground to demonstrate various features:
  - Simple [User](https://github.com/sdeleuze/geospatial-messenger/blob/master/src/main/kotlin/io/spring/messenger/domain/User.kt)
@@ -26,13 +27,14 @@ It is used as a playground to demonstrate various features:
      
 ## Run the application
 
- - Install a PostgreSQL database with PostGis extension, on Mac you can use [Postgresapp](http://postgresapp.com/) 
- - Clone this repository
- - Customize database configuration on [application.yml](https://github.com/sdeleuze/geospatial-messenger/blob/master/src/main/resources/application.yml)
- - Run it within your IDE or with `./gradlew bootRun`
- - Open `http://localhost:8080/` in your browser, documentation should be available at `http://localhost:8080/docs/index.html` when run from the JAR.
- 
+ - Install a PostgreSQL database with PostGis extension, on Mac you can use [Postgresapp](http://postgresapp.com/).
+ - Clone this repository.
+ - Customize database configuration on [application.yml](https://github.com/sdeleuze/geospatial-messenger/blob/master/src/main/resources/application.yml).
+ - Run it within your IDE or with `./gradlew bootRun`.
+ - Open `http://localhost:8080/` in your browser.
 ![Screenshot](/screenshot.png?raw=true)
+ - Documentation should be available at `http://localhost:8080/docs/index.html` when run from the JAR.
+
  
 ## Improvements I have in mind
  - [Exposed issue #24](https://github.com/JetBrains/Exposed/issues/24): see if Exposed could support natively data classes + repository patten.
