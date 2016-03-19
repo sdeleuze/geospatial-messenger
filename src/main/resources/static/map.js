@@ -32,7 +32,7 @@ geolocation.on("error", function (error) {
 });
 var positionFeature = new ol.Feature();
 positionFeature.setStyle(new ol.style.Style({
-    image: new ol.style.Icon({src: "horse.png", scale: 0.25})
+    image: new ol.style.Icon({src: "u.png", scale: 0.5})
 }));
 var centerDefined = false;
 geolocation.on("change:position", function () {
@@ -134,7 +134,7 @@ var vectorSource = new ol.source.Vector({
 
 var vector = new ol.layer.Vector({
     source: vectorSource,
-    style: new ol.style.Style({image: new ol.style.Icon({src: "pig.png", scale: 0.1})}),
+    style: new ol.style.Style({image: new ol.style.Icon({src: "m.png", scale: 0.5})}),
 });
 
 map.addLayer(vector);
