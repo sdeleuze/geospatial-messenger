@@ -12,7 +12,7 @@ It is used as a playground to demonstrate various features:
    and describe your [SQL requests](https://github.com/sdeleuze/geospatial-messenger/blob/master/src/main/kotlin/io/spring/messenger/repository/MessageRepository.kt)
    with a fluent API without requiring code generation.
  - [Controllers](https://github.com/sdeleuze/geospatial-messenger/blob/master/src/main/kotlin/io/spring/messenger/web/MessageController.kt)
-   demonstrates how to use Spring Framework 4.3 upcoming `@GetMapping` and `PostMapping` annotation shortcuts, as well as Server-Sent Events
+   demonstrates how to use Spring Framework 4.3 upcoming `@GetMapping` and `@PostMapping` annotation shortcuts, as well as Server-Sent Events
    to push data to the client.
  - [Kotlin extensions](https://github.com/sdeleuze/geospatial-messenger/blob/master/src/main/kotlin/io/spring/messenger/Database.kt#L23-L42)
     allows to add Geospatial support to [Exposed](https://github.com/JetBrains/Exposed) and
@@ -21,7 +21,7 @@ It is used as a playground to demonstrate various features:
  - The REST API is fully tested and documented thanks to the awesome [Spring REST docs](http://projects.spring.io/spring-restdocs/)
    , see [MessageControllerTests](https://github.com/sdeleuze/geospatial-messenger/blob/master/src/test/kotlin/io/spring/messenger/MessageControllerTests.kt)
    and [index.adoc](https://github.com/sdeleuze/geospatial-messenger/blob/master/src/main/asciidoc/index.adoc).
- - The client side is a pure HTML + Javascript application developed with [OpenLayers] mapping library, see
+ - The client side is a pure HTML + Javascript application developed with [OpenLayers](http://openlayers.org) mapping library, see
    [index.html](https://github.com/sdeleuze/geospatial-messenger/blob/master/src/main/resources/static/index.html)
    and [map.js](https://github.com/sdeleuze/geospatial-messenger/blob/master/src/main/resources/static/map.js).
      
