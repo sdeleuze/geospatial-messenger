@@ -3,7 +3,8 @@ The code is very concise, and the generated application is a 18 MBytes self-cont
 
 **This branch is based on [`spring-data-jdbc-repository`](https://github.com/jirutka/spring-data-jdbc-repository/)
 (this is an improved fork by [Jakub Jirutka](Jakub Jirutka) of the [original project](https://github.com/nurkiewicz/spring-data-jdbc-repository))
-instead of [Exposed](https://github.com/JetBrains/Exposed) on the master branch.**
+instead of [Exposed](https://github.com/JetBrains/Exposed) on the master branch. There is no Spring Data JPA version yet but
+feel free to fork this repo and contribute it with a pull request!**
 
 It is used as a playground to demonstrate various features:
  - Simple [User](https://github.com/sdeleuze/geospatial-messenger/blob/master/src/main/kotlin/io/spring/messenger/domain/User.kt)
