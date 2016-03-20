@@ -24,6 +24,10 @@ It is used as a playground to demonstrate various features:
  - The client side is a pure HTML + Javascript application developed with [OpenLayers](http://openlayers.org) mapping library, see
    [index.html](https://github.com/sdeleuze/geospatial-messenger/blob/master/src/main/resources/static/index.html)
    and [map.js](https://github.com/sdeleuze/geospatial-messenger/blob/master/src/main/resources/static/map.js).
+
+**A Spring Data version based on [spring-data-jdbc-repository](https://github.com/jirutka/spring-data-jdbc-repository/) is also available in
+[this branch](https://github.com/sdeleuze/geospatial-messenger/tree/spring-data-jdbc-repository). There is no Spring Data JPA version yet but
+feel free to fork this repo and contribute it with a pull request!**
      
 ## Run the application
 
