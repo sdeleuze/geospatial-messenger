@@ -1,6 +1,8 @@
 This is a sample application that demonstrates how to build a Kotlin + Spring Boot applications with a PostgreSQL database.
 The code is very concise, and the generated application is a 18 MBytes self-contained executable jar with low memory consumption.
 
+A detailed blog post describing this application is available [here](https://spring.io/blog/2016/03/20/a-geospatial-messenger-with-kotlin-spring-boot-and-postgresql).
+
 It is used as a playground to demonstrate various features:
  - Simple [User](https://github.com/sdeleuze/geospatial-messenger/blob/master/src/main/kotlin/io/spring/messenger/domain/User.kt)
    and [Message](https://github.com/sdeleuze/geospatial-messenger/blob/master/src/main/kotlin/io/spring/messenger/domain/Message.kt)
