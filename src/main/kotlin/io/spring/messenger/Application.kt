@@ -7,16 +7,18 @@ import io.spring.messenger.domain.Message
 import io.spring.messenger.domain.User
 import io.spring.messenger.repository.MessageRepository
 import io.spring.messenger.repository.UserRepository
-import org.jetbrains.exposed.sql.Database
 import org.postgis.geojson.PostGISModule
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
+import org.springframework.jdbc.datasource.DataSourceTransactionManager
+import org.springframework.transaction.annotation.EnableTransactionManagement
 import javax.sql.DataSource
 
 @SpringBootApplication
+@EnableTransactionManagement
 open class Application {
 
     @Bean open fun objectMapper(): ObjectMapper {
@@ -25,11 +27,10 @@ open class Application {
         return mapper
     }
 
-    @Bean open fun db(dataSource: DataSource) = Database.connect(dataSource)
+    @Bean
+    open fun transactionManager(dataSource: DataSource) = DataSourceTransactionManager(dataSource)
 
-    @Bean open fun init(db: Database, ur: UserRepository, mr: MessageRepository) = CommandLineRunner {
-        ur.createTable()
-        mr.createTable()
+    @Bean open fun init(ur: UserRepository, mr: MessageRepository) = CommandLineRunner {
         mr.deleteAll()
         ur.deleteAll()
 

@@ -1,46 +1,44 @@
 package io.spring.messenger.repository
 
-import io.spring.messenger.Messages
+
+import cz.jirutka.spring.data.jdbc.BaseJdbcRepository
+import cz.jirutka.spring.data.jdbc.RowUnmapper
+import cz.jirutka.spring.data.jdbc.TableDescription
 import io.spring.messenger.domain.Message
-import io.spring.messenger.within
-import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import org.postgis.PGbox2d
-import org.springframework.beans.factory.annotation.Autowired
+import org.postgis.PGgeometry
+import org.postgis.Point
+import org.springframework.jdbc.core.RowMapper
 import org.springframework.stereotype.Repository
 
 @Repository
-open class MessageRepository @Autowired constructor(val db: Database) {
+open class MessageRepository : BaseJdbcRepository<Message, Long>(mapper(), unmapper(), TableDescription("messages", "id")) {
 
-    open fun createTable() = db.transaction {
-        create(Messages)
+    open fun findByBoundingBox(box: PGbox2d): List<Message>
+        = jdbcOperations.query("""SELECT * FROM ${getTableDesc().tableName}
+                                  WHERE location &&
+                                  ST_MakeEnvelope(${box.llb.x}, ${box.llb.y}, ${box.urt.x}, ${box.urt.y}
+                                  , 4326)""", mapper())
+
+    override fun <S : Message> postCreate(entity: S, generatedId: Number?): S {
+        if (generatedId != null) entity.id = generatedId.toInt()
+        return entity
     }
+}
 
-    open fun create(m: Message) = db.transaction {
-        m.id = Messages.insert(map(m)).get(Messages.id)
-        m
+private fun mapper() = RowMapper<Message> {
+    rs, rowNum -> Message(
+        rs.getString("content"),
+        rs.getString("author"),
+        (rs.getObject("location") as PGgeometry?)?.geometry as Point?,
+        rs.getInt("id"))
+}
+
+private fun unmapper() = RowUnmapper<Message> { m ->
+    val map = mutableMapOf(Pair("id", m.id), Pair("content", m.content), Pair("author", m.author))
+    if (m.location != null) {
+        m.location!!.srid = 4326
+        map["location"] = PGgeometry(m.location)
     }
-
-    open fun findAll() = db.transaction {
-        unmap(Messages.selectAll())
-    }
-
-    open fun findByBoundingBox(box: PGbox2d) = db.transaction {
-        unmap(Messages.select { Messages.location within box })
-    }
-
-    open fun deleteAll() = db.transaction {
-        Messages.deleteAll()
-    }
-
-    private fun map(m: Message): Messages.(UpdateBuilder<*>) -> Unit = {
-        if (m.id != null) it[id] = m.id
-        it[content] = m.content
-        it[author] = m.author
-        it[location] = m.location
-    }
-
-    private fun unmap(rows: SizedIterable<ResultRow>): List<Message> =
-            rows.map { Message(it[Messages.content], it[Messages.author], it[Messages.location], it[Messages.id]) }
-
+    map
 }

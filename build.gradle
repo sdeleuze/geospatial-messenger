@@ -23,6 +23,7 @@ repositories {
   mavenCentral()
   maven { url 'http://repo.spring.io/snapshot' }
   maven { url 'https://dl.bintray.com/sdeleuze/maven/' }
+  maven { url 'https://oss.jfrog.org/oss-snapshot-local' }
 }
 
 jar {
@@ -53,10 +54,7 @@ dependencies {
   compile("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
   compile('com.fasterxml.jackson.module:jackson-module-kotlin:2.7.1-2')
 
-  compile('org.jetbrains.exposed:exposed:0.4-M1') { // https://github.com/sdeleuze/Exposed
-    exclude module: 'h2'
-    exclude module: 'joda-time'
-  }
+  compile('cz.jirutka.spring:spring-data-jdbc-repository:0.6.0-SNAPSHOT') // From https://github.com/jirutka/spring-data-jdbc-repository
   compile('org.postgresql:postgresql:9.4.1208')
   compile('net.postgis:postgis-jdbc:2.2.0')
   compile('com.github.mayconbordin:postgis-geojson:1.1') // From https://github.com/sdeleuze/postgis-geojson

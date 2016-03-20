@@ -1,53 +1,46 @@
 package io.spring.messenger.repository
 
-import io.spring.messenger.Users
+import cz.jirutka.spring.data.jdbc.BaseJdbcRepository
+import cz.jirutka.spring.data.jdbc.RowUnmapper
 import io.spring.messenger.domain.User
-import io.spring.messenger.within
-import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import org.postgis.PGbox2d
+import org.postgis.PGgeometry
 import org.postgis.Point
-import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.jdbc.core.RowMapper
 import org.springframework.stereotype.Repository
 
 @Repository
-open class UserRepository @Autowired constructor(val db: Database) {
+open class UserRepository : BaseJdbcRepository<User, String>(mapper(), unmapper(), "\"users\"", "user_name") {
 
-    open fun createTable() = db.transaction {
-        create(Users)
-    }
-
-    open fun create(user: User) {
-        db.transaction {
-            Users.insert( map(user) )
-        }
-    }
-
-    open fun updateLocation(userName:String, location: Point) = db.transaction {
+    open fun updateLocation(userName:String, location: Point): Unit {
         location.srid = 4326
-        Users.update({Users.userName eq userName}) { it[Users.location] = location}
+        jdbcOperations.update("UPDATE ${tableDesc.tableName} SET location = '${PGgeometry(location)}' WHERE user_name = '$userName'")
     }
 
-    open fun findAll() = db.transaction {
-        unmap(Users.selectAll())
+    open fun findByBoundingBox(box: PGbox2d): List<User>
+        = jdbcOperations.query("""SELECT * FROM ${tableDesc.tableName}
+                                  WHERE location &&
+                                  ST_MakeEnvelope(${box.llb.x}, ${box.llb.y}, ${box.urt.x}, ${box.urt.y}
+                                  , 4326)""", mapper())
+
+}
+
+private fun mapper() = RowMapper<User> {
+    rs, rowNum -> User(
+        rs.getString("user_name"),
+        rs.getString("first_name"),
+        rs.getString("last_name"),
+        (rs.getObject("location") as PGgeometry?)?.geometry as Point?)
+}
+
+private fun unmapper() = RowUnmapper<User> { user ->
+    val map = mutableMapOf<String, Any>(
+            Pair("user_name", user.userName),
+            Pair("first_name", user.firstName),
+            Pair("last_name", user.lastName))
+    if (user.location != null) {
+        user.location!!.srid = 4326
+        map["location"] = PGgeometry(user.location)
     }
-
-    open fun findByBoundingBox(box: PGbox2d) = db.transaction {
-        unmap(Users.select { Users.location within box })
-    }
-
-    open fun deleteAll() = db.transaction {
-        Users.deleteAll()
-    }
-
-    private fun map(u: User): Users.(UpdateBuilder<*>) -> Unit = {
-        it[userName] = u.userName
-        it[firstName] = u.firstName
-        it[lastName] = u.lastName
-        it[location] = u.location
-    }
-
-    private fun unmap(rows: SizedIterable<ResultRow>): List<User> =
-            rows.map { User(it[Users.userName], it[Users.firstName], it[Users.lastName], it[Users.location]) }
-
+    map;
 }
