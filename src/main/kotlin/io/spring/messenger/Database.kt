@@ -6,23 +6,25 @@ import org.postgis.PGgeometry
 import org.postgis.Point
 
 object Messages : Table() {
-    val id = integer("id").autoIncrement().primaryKey()
-    val content = text("content")
-    val author = reference("author", Users.userName)
+    val id       = integer("id").autoIncrement().primaryKey()
+    val content  = text("content")
+    val author   = reference("author", Users.userName)
     val location = point("location").nullable()
 }
 
 object Users : Table() {
-    val userName = text("user_name").primaryKey()
+    val userName  = text("user_name").primaryKey()
     val firstName = text("first_name")
-    val lastName = text("last_name")
-    val location = point("location").nullable()
+    val lastName  = text("last_name")
+    val location  = point("location").nullable()
 }
 
 
-fun Table.point(name: String, srid: Int = 4326): Column<Point> = registerColumn(name, PointColumnType())
+fun Table.point(name: String, srid: Int = 4326): Column<Point>
+        = registerColumn(name, PointColumnType())
 
-infix fun ExpressionWithColumnType<*>.within(box: PGbox2d) : Op<Boolean> = WithinOp(this, box)
+infix fun ExpressionWithColumnType<*>.within(box: PGbox2d) : Op<Boolean>
+        = WithinOp(this, box)
 
 private class PointColumnType(val srid: Int = 4326): ColumnType() {
     override fun sqlType() = "GEOMETRY(Point, $srid)"

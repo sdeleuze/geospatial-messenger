@@ -59,7 +59,7 @@ dependencies {
   }
   compile('org.postgresql:postgresql:9.4.1208')
   compile('net.postgis:postgis-jdbc:2.2.0')
-  compile('com.github.mayconbordin:postgis-geojson:1.1') // From https://github.com/sdeleuze/postgis-geojson
+  compile('com.github.mayconbordin:postgis-geojson:1.1') // https://github.com/sdeleuze/postgis-geojson
 
   testCompile('org.springframework.boot:spring-boot-starter-test')
   testCompile('org.springframework.restdocs:spring-restdocs-mockmvc:1.0.1.RELEASE')

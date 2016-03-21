@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus.*
 import org.springframework.web.bind.annotation.*
 
-@RestController @RequestMapping("/user")
+@RestController
+@RequestMapping("/user")
 class UserController @Autowired constructor(val repository: UserRepository) {
 
-    @PostMapping @ResponseStatus(CREATED)
+    @PostMapping
+    @ResponseStatus(CREATED)
     fun create(@RequestBody u: User) { repository.create(u) }
 
     @GetMapping
@@ -22,7 +24,9 @@ class UserController @Autowired constructor(val repository: UserRepository) {
                           @PathVariable xMax:Double, @PathVariable yMax:Double)
             = repository.findByBoundingBox(PGbox2d(Point(xMin, yMin), Point(xMax, yMax)))
 
-    @PutMapping("/{userName}/location/{x},{y}") @ResponseStatus(NO_CONTENT)
-    fun updateLocation(@PathVariable userName:String, @PathVariable x: Double, @PathVariable y: Double)
+    @PutMapping("/{userName}/location/{x},{y}")
+    @ResponseStatus(NO_CONTENT)
+    fun updateLocation(@PathVariable userName:String,
+                       @PathVariable x: Double, @PathVariable y: Double)
             = repository.updateLocation(userName, Point(x, y))
 }
