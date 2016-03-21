@@ -17,10 +17,8 @@ open class UserRepository @Autowired constructor(val db: Database) {
         create(Users)
     }
 
-    open fun create(user: User) {
-        db.transaction {
-            Users.insert( map(user) )
-        }
+    open fun create(user: User) = db.transaction {
+            Users.insert( toRow(user) )
     }
 
     open fun updateLocation(userName:String, location: Point) = db.transaction {
@@ -29,25 +27,25 @@ open class UserRepository @Autowired constructor(val db: Database) {
     }
 
     open fun findAll() = db.transaction {
-        unmap(Users.selectAll())
+        Users.selectAll().map { fromRow(it) }
     }
 
     open fun findByBoundingBox(box: PGbox2d) = db.transaction {
-        unmap(Users.select { Users.location within box })
+        Users.select { Users.location within box }.map { fromRow(it) }
     }
 
     open fun deleteAll() = db.transaction {
         Users.deleteAll()
     }
 
-    private fun map(u: User): Users.(UpdateBuilder<*>) -> Unit = {
+    fun toRow(u: User): Users.(UpdateBuilder<*>) -> Unit = {
         it[userName] = u.userName
         it[firstName] = u.firstName
         it[lastName] = u.lastName
         it[location] = u.location
     }
 
-    private fun unmap(rows: SizedIterable<ResultRow>): List<User> =
-            rows.map { User(it[Users.userName], it[Users.firstName], it[Users.lastName], it[Users.location]) }
+    fun fromRow(r: ResultRow) =
+        User(r[Users.userName], r[Users.firstName], r[Users.lastName], r[Users.location])
 
 }

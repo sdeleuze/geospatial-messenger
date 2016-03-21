@@ -17,30 +17,30 @@ open class MessageRepository @Autowired constructor(val db: Database) {
     }
 
     open fun create(m: Message) = db.transaction {
-        m.id = Messages.insert(map(m)).get(Messages.id)
+        m.id = Messages.insert(toRow(m)).get(Messages.id)
         m
     }
 
     open fun findAll() = db.transaction {
-        unmap(Messages.selectAll())
+        Messages.selectAll().map { fromRow(it) }
     }
 
     open fun findByBoundingBox(box: PGbox2d) = db.transaction {
-        unmap(Messages.select { Messages.location within box })
+        Messages.select { Messages.location within box }.map { fromRow(it) }
     }
 
     open fun deleteAll() = db.transaction {
         Messages.deleteAll()
     }
 
-    private fun map(m: Message): Messages.(UpdateBuilder<*>) -> Unit = {
+    fun toRow(m: Message): Messages.(UpdateBuilder<*>) -> Unit = {
         if (m.id != null) it[id] = m.id
         it[content] = m.content
         it[author] = m.author
         it[location] = m.location
     }
 
-    private fun unmap(rows: SizedIterable<ResultRow>): List<Message> =
-            rows.map { Message(it[Messages.content], it[Messages.author], it[Messages.location], it[Messages.id]) }
+    fun fromRow(r: ResultRow) =
+        Message(r[Messages.content], r[Messages.author], r[Messages.location], r[Messages.id])
 
 }
