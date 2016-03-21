@@ -15,7 +15,8 @@ class MessageController @Autowired constructor(val repository: MessageRepository
 
     val broadcaster = SseBroadcaster()
 
-    @PostMapping @ResponseStatus(CREATED)
+    @PostMapping
+    @ResponseStatus(CREATED)
     fun create(@RequestBody message: Message): Message {
         val m = repository.create(message)
         broadcaster.send(m)

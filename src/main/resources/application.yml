@@ -1,7 +1,12 @@
+logging:
+  level:
+    org.springframework.web.servlet: INFO
 spring:
   datasource:
     platform: "postgis"
     driver-class-name: "org.postgis.DriverWrapper"
     url: "jdbc:postgresql_postGIS://localhost/seb"
     username: "postgres"
-
+  mvc:
+      async:
+        request-timeout: 1000000

@@ -22,7 +22,6 @@ open class UserRepository : BaseJdbcRepository<User, String>(mapper(), unmapper(
                                   WHERE location &&
                                   ST_MakeEnvelope(${box.llb.x}, ${box.llb.y}, ${box.urt.x}, ${box.urt.y}
                                   , 4326)""", mapper())
-
 }
 
 private fun mapper() = RowMapper<User> {
