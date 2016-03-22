@@ -43,6 +43,7 @@ feel free to fork this repo and contribute it with a pull request!**
 
  
 ## Improvements I have in mind
+ - Use [Kotlin JS](https://github.com/JetBrains/kotlin/tree/master/js) instead of Javascript for client side. 
  - [Exposed issue #25](https://github.com/JetBrains/Exposed/issues/25): allow to support SQL transaction with `@Transactional`.
  - [Spring HATEOAS issue #401](https://github.com/spring-projects/spring-hateoas/issues/401): add HATEOAS support, but without having to extend
    `ResourceSupport` or wrapping it into a `Resource<Foo>` container .
