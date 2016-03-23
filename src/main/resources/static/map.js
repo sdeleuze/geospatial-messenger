@@ -9,7 +9,7 @@ $.getJSON("/user", function(data) {
 // #################################### Map ####################################
 
 var view = new ol.View({
-    zoom: 8
+    zoom: 4
 });
 
 var map = new ol.Map({
@@ -127,10 +127,7 @@ var vectorSource = new ol.source.Vector({
             });
             }
           }});
-        },
-        strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
-          tileSize: 512
-        }))
+        }
       });
 
 var vector = new ol.layer.Vector({

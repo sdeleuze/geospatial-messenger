@@ -53,10 +53,6 @@ dependencies {
   compile("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
   compile('com.fasterxml.jackson.module:jackson-module-kotlin:2.7.1-2')
 
-  compile('org.jetbrains.exposed:exposed:0.4-M1') { // https://github.com/sdeleuze/Exposed
-    exclude module: 'h2'
-    exclude module: 'joda-time'
-  }
   compile('org.postgresql:postgresql:9.4.1208')
   compile('net.postgis:postgis-jdbc:2.2.0')
   compile('com.github.mayconbordin:postgis-geojson:1.1') // https://github.com/sdeleuze/postgis-geojson

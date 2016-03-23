@@ -17,9 +17,9 @@ class MessageController @Autowired constructor(val repository: MessageRepository
 
     @PostMapping @ResponseStatus(CREATED)
     fun create(@RequestBody message: Message): Message {
-        val m = repository.create(message)
-        broadcaster.send(m)
-        return m
+        repository.create(message)
+        broadcaster.send(message)
+        return message
     }
 
     @GetMapping
