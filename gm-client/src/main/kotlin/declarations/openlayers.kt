@@ -88,7 +88,7 @@ object olx {
 //        var overlays: Any?  get() = noImpl; set(value) = noImpl
 //        var renderer: Any?  get() = noImpl; set(value) = noImpl
         var target: Any?  get() = noImpl; set(value) = noImpl
-        var view: ViewOptions?  get() = noImpl; set(value) = noImpl
+        var view: ol.View?  get() = noImpl; set(value) = noImpl
     }
     interface OverlayOptions {
         var element: Element?  get() = noImpl; set(value) = noImpl
@@ -521,7 +521,7 @@ object ol {
         open fun addLayer(layer: ol.layer.Base): Unit = noImpl
         open fun addOverlay(overlay: ol.Overlay): Unit = noImpl
 //        open fun beforeRender(var_args: ol.PreRenderFunction): Unit = noImpl
-        open fun forEachFeatureAtPixel(pixel: ol.Pixel, callback: (feature: ol.Feature, layer: ol.layer.Layer) -> Any, ref: Any? = null, layerFilter: ((layerCandidate: ol.layer.Layer) -> Boolean)? = null, ref2: Any? = null): Unit = noImpl
+        open fun <T> forEachFeatureAtPixel(pixel: ol.Pixel, callback: (feature: ol.Feature, layer: ol.layer.Layer) -> T, ref: Any? = null, layerFilter: ((layerCandidate: ol.layer.Layer) -> Boolean)? = null, ref2: Any? = null): T? = noImpl
 //        open fun forEachLayerAtPixel(pixel: ol.Pixel, callback: (layer: ol.layer.Layer) -> Any, ref: Any? = null, layerFilter: ((layerCandidate: ol.layer.Layer) -> Boolean)? = null, ref2: Any? = null): Unit = noImpl
 //        open fun getControls(): ol.Collection<ol.control.Control> = noImpl
 //        open fun getCoordinateFromPixel(pixel: ol.Pixel): ol.Coordinate = noImpl
@@ -552,12 +552,12 @@ object ol {
 //        open fun updateSize(): Unit = noImpl
     }
     open class MapBrowserEvent : MapEvent() {
-//        open var coordinate: Coordinate = noImpl
+        open var coordinate: Coordinate = noImpl
 //        open var dragging: Boolean = noImpl
 //        override var frameState: olx.FrameState = noImpl
 //        override var map: Map = noImpl
         open var originalEvent: Event = noImpl
-//        open var pixel: Pixel = noImpl
+        open var pixel: Pixel = noImpl
 //        open fun preventDefault(): Unit = noImpl
 //        open fun stopPropagation(): Unit = noImpl
     }
@@ -566,7 +566,7 @@ object ol {
 //        open var map: Map = noImpl
     }
     open class Object(values: Object? = null) : Observable() {
-//        open fun get(key: String): Any = noImpl
+        open fun get(key: String): Any = noImpl
 //        open fun getKeys(): Array<String> = noImpl
 //        open fun getProperties(): Object = noImpl
 //        override fun getRevision(): Number = noImpl
@@ -1176,6 +1176,8 @@ object ol {
         operator fun get(i: Int): Number?
     }
     interface OverlayPositioning /*: String*/
+    fun OverlayPositioning(s: String)
+
     interface Pixel/* : Array<Number>*/{
         @nativeGetter
         operator fun get(i: Int): Number?
