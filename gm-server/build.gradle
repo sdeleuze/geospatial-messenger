@@ -43,7 +43,6 @@ configurations {
 }
 
 dependencies {
-  compile(project(":gm-client")) 
   compile('org.springframework.boot:spring-boot-starter-web') {
     exclude module: 'spring-boot-starter-validation'
   }
@@ -60,10 +59,6 @@ dependencies {
 
   testCompile('org.springframework.boot:spring-boot-starter-test')
   testCompile('org.springframework.restdocs:spring-restdocs-mockmvc:1.0.1.RELEASE')
-}
-
-task wrapper(type: Wrapper) {
-  gradleVersion = '2.12'
 }
 
 
