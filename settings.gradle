@@ -1,0 +1,3 @@
+rootProject.name = 'geospatial-messenger'
+
+include 'gm-client', 'gm-server'

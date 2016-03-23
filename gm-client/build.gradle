@@ -1,0 +1,45 @@
+buildscript {
+  ext {
+    kotlinVersion = '1.0.1'
+  }
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+  }
+}
+
+plugins {
+    id "org.asciidoctor.convert" version "1.5.2"
+}
+
+apply plugin: 'kotlin2js'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+	compile("org.jetbrains.kotlin:kotlin-js-library:${kotlinVersion}")
+}
+
+compileKotlin2Js.kotlinOptions.sourceMap = true
+compileKotlin2Js.kotlinOptions.outputFile = "${projectDir}/build/js/map.js"
+compileKotlin2Js.kotlinOptions.suppressWarnings = true
+compileKotlin2Js.kotlinOptions.verbose = true
+
+task copyJsFilesFromDependencies(dependsOn: build) {
+    configurations.compile.each { File file ->
+        copy {
+            includeEmptyDirs = false
+
+            from zipTree(file.absolutePath)
+            into "${projectDir}/build/js/lib"
+            include { fileTreeElement ->
+                def path = fileTreeElement.path
+                path.endsWith(".js") && (path.startsWith("META-INF/resources/") || !path.startsWith("META-INF/"))
+            }
+        }
+    }
+}

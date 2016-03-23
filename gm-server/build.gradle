@@ -43,6 +43,7 @@ configurations {
 }
 
 dependencies {
+  compile(project(":gm-client")) 
   compile('org.springframework.boot:spring-boot-starter-web') {
     exclude module: 'spring-boot-starter-validation'
   }
