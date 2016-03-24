@@ -20,7 +20,8 @@ dependencies {
 	compile("org.jetbrains.kotlin:kotlin-js-library:${kotlinVersion}")
 }
 
-compileKotlin2Js.kotlinOptions.sourceMap = true
+compileKotlin2Js.kotlinOptions.kjsm = false
+compileKotlin2Js.kotlinOptions.sourceMap = false
 compileKotlin2Js.kotlinOptions.outputFile = "${projectDir}/../gm-server/src/main/resources/static/kotlin-map.js"
 compileKotlin2Js.kotlinOptions.suppressWarnings = true
 compileKotlin2Js.kotlinOptions.verbose = true
