@@ -23,13 +23,9 @@ It is used as a playground to demonstrate various features:
  - The REST API is fully tested and documented thanks to the awesome [Spring REST docs](http://projects.spring.io/spring-restdocs/)
    , see [MessageControllerTests](https://github.com/sdeleuze/geospatial-messenger/blob/master/src/test/kotlin/io/spring/messenger/MessageControllerTests.kt)
    and [index.adoc](https://github.com/sdeleuze/geospatial-messenger/blob/master/src/main/asciidoc/index.adoc).
- - The client side is a pure HTML + Javascript application developed with [OpenLayers](http://openlayers.org) mapping library, see
-   [index.html](https://github.com/sdeleuze/geospatial-messenger/blob/master/src/main/resources/static/index.html)
-   and [map.js](https://github.com/sdeleuze/geospatial-messenger/blob/master/src/main/resources/static/map.js).
+ - The client side is originally a pure HTML + Javascript application developed with [OpenLayers](http://openlayers.org) mapping library, see [index.html](https://github.com/sdeleuze/geospatial-messenger/blob/master/src/main/resources/static/index.html) and [map.js](https://github.com/sdeleuze/geospatial-messenger/blob/master/src/main/resources/static/map.js). But an experimental (work in progress) Kotlin2js version has ben contributed by @bashor, you can find it [here](https://github.com/sdeleuze/geospatial-messenger/tree/kotlin-js/gm-client/src/main/kotlin).
 
-**A Spring Data version based on [spring-data-jdbc-repository](https://github.com/jirutka/spring-data-jdbc-repository/) is also available in
-[this branch](https://github.com/sdeleuze/geospatial-messenger/tree/spring-data-jdbc-repository). There is no Spring Data JPA version yet but
-feel free to fork this repo and contribute it with a pull request!**
+A Spring Data version based on [spring-data-jdbc-repository](https://github.com/jirutka/spring-data-jdbc-repository/) is also available in [this branch](https://github.com/sdeleuze/geospatial-messenger/tree/spring-data-jdbc-repository). There is no Spring Data JPA version yet but feel free to fork this repo and contribute it with a pull request!
      
 ## Run the application
 
@@ -43,7 +39,6 @@ feel free to fork this repo and contribute it with a pull request!**
 
  
 ## Improvements I have in mind
- - Use [Kotlin JS](https://github.com/JetBrains/kotlin/tree/master/js) instead of Javascript for client side. 
  - [Exposed issue #25](https://github.com/JetBrains/Exposed/issues/25): allow to support SQL transaction with `@Transactional`.
  - [Spring HATEOAS issue #401](https://github.com/spring-projects/spring-hateoas/issues/401): add HATEOAS support, but without having to extend
    `ResourceSupport` or wrapping it into a `Resource<Foo>` container .
