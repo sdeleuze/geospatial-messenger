@@ -6,11 +6,10 @@ import io.spring.messenger.within
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import org.postgis.PGbox2d
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
 
 @Repository
-open class MessageRepository @Autowired constructor(val db: Database) {
+open class MessageRepository(val db: Database) {
 
     open fun createTable() = db.transaction {
         create(Messages)

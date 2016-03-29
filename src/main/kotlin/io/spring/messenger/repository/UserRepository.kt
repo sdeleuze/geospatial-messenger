@@ -7,11 +7,10 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import org.postgis.PGbox2d
 import org.postgis.Point
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
 
 @Repository
-open class UserRepository @Autowired constructor(val db: Database) {
+open class UserRepository(val db: Database) {
 
     open fun createTable() = db.transaction {
         create(Users)

@@ -4,14 +4,13 @@ import io.spring.messenger.domain.Message
 import io.spring.messenger.repository.MessageRepository
 import org.postgis.PGbox2d
 import org.postgis.Point
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus.*
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
 
 @RestController
 @RequestMapping("/message")
-class MessageController @Autowired constructor(val repository: MessageRepository) {
+class MessageController(val repository: MessageRepository) {
 
     val broadcaster = SseBroadcaster()
 

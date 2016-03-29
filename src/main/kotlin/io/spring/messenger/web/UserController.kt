@@ -4,13 +4,12 @@ import io.spring.messenger.domain.User
 import io.spring.messenger.repository.UserRepository
 import org.postgis.PGbox2d
 import org.postgis.Point
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus.*
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/user")
-class UserController @Autowired constructor(val repository: UserRepository) {
+class UserController(val repository: UserRepository) {
 
     @PostMapping
     @ResponseStatus(CREATED)
