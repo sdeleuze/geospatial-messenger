@@ -2,7 +2,6 @@ package io.spring.messenger
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.spring.messenger.domain.Message
 import io.spring.messenger.domain.User
 import io.spring.messenger.repository.MessageRepository
@@ -20,7 +19,7 @@ import javax.sql.DataSource
 open class Application {
 
     @Bean open fun objectMapper(): ObjectMapper {
-        val mapper:ObjectMapper = Jackson2ObjectMapperBuilder().modulesToInstall(PostGISModule(), KotlinModule()).build()
+        val mapper:ObjectMapper = Jackson2ObjectMapperBuilder().modulesToInstall(PostGISModule()).build()
         mapper.setSerializationInclusion(Include.NON_NULL)
         return mapper
     }

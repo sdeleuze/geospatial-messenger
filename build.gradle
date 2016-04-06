@@ -21,8 +21,9 @@ apply plugin: 'spring-boot'
 
 repositories {
   mavenCentral()
-  maven { url 'http://repo.spring.io/snapshot' }
-  maven { url 'https://dl.bintray.com/sdeleuze/maven/' }
+  maven { url 'http://repo.spring.io/milestone' }
+  maven { url 'https://dl.bintray.com/kotlin/exposed' } // exposed
+  maven { url 'https://dl.bintray.com/sdeleuze/maven/' } // postgis-geojson
 }
 
 jar {
@@ -35,8 +36,8 @@ jar {
 }
 
 ext['snippetsDir'] = file('build/generated-snippets')
-ext['spring.version'] = '4.3.0.BUILD-SNAPSHOT'
-ext['jackson.version'] = '2.7.1'
+ext['spring.version'] = '4.3.0.RC1'
+ext['jackson.version'] = '2.7.3'
 
 configurations {
   all*.exclude group: 'postgresql', module: 'postgresql'
@@ -51,9 +52,10 @@ dependencies {
 
 
   compile("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
-  compile('com.fasterxml.jackson.module:jackson-module-kotlin:2.7.1-2')
+  compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+  compile("com.fasterxml.jackson.module:jackson-module-kotlin:${project.ext['jackson.version']}")
 
-  compile('org.jetbrains.exposed:exposed:0.4-M1') { // https://github.com/sdeleuze/Exposed
+  compile('org.jetbrains.exposed:exposed:0.4.2') {
     exclude module: 'h2'
     exclude module: 'joda-time'
   }
