@@ -5,6 +5,7 @@ import io.spring.messenger.repository.UserRepository
 import org.postgis.PGbox2d
 import org.postgis.Point
 import org.springframework.http.HttpStatus.*
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 
 @RestController
