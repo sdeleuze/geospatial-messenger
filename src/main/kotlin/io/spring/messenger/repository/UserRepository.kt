@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Repository
 @Transactional
-open class UserRepository(val db: Database) {
+open class UserRepository() {
 
     open fun createTable() = SchemaUtils.create(Users)
 

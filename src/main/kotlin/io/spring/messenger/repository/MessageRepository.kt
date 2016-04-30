@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Repository
 @Transactional
-open class MessageRepository(val db: Database) {
+open class MessageRepository() {
 
     open fun createTable() = SchemaUtils.create(Messages)
 
