@@ -2,6 +2,7 @@ buildscript {
   ext {
     springBootVersion = '1.4.0.M2'
     kotlinVersion = '1.0.2-eap-74'
+    exposedVersion =  '0.5.0'
   }
   repositories {
     mavenCentral()
@@ -27,8 +28,7 @@ repositories {
   maven { url 'https://dl.bintray.com/kotlin/kotlin-eap/' }
   maven { url 'https://dl.bintray.com/kotlin/exposed' } // exposed
   maven { url 'https://dl.bintray.com/sdeleuze/maven/' } // postgis-geojson
-  mavenLocal()
-}
+  }
 
 jar {
   baseName = 'geospatial-messenger'
@@ -58,11 +58,8 @@ dependencies {
   compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
   compile("com.fasterxml.jackson.module:jackson-module-kotlin:${project.ext['jackson.version']}")
 
-  compile('org.jetbrains.exposed:exposed:0.5.0-SNAPSHOT') {
-    exclude module: 'h2'
-    exclude module: 'joda-time'
-  }
-  compile('org.jetbrains.exposed:spring-transaction:0.5.0-SNAPSHOT')
+  compile("org.jetbrains.exposed:exposed:${exposedVersion}")
+  compile("org.jetbrains.exposed:spring-transaction:${exposedVersion}")
   compile('org.postgresql:postgresql:9.4.1208')
   compile('net.postgis:postgis-jdbc:2.2.0')
   compile('com.github.mayconbordin:postgis-geojson:1.1') // https://github.com/sdeleuze/postgis-geojson

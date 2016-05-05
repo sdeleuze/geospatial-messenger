@@ -20,15 +20,18 @@ import javax.sql.DataSource
 @EnableTransactionManagement
 open class Application {
 
-    @Bean open fun objectMapper(): ObjectMapper {
+    @Bean
+    open fun objectMapper(): ObjectMapper {
         val mapper:ObjectMapper = Jackson2ObjectMapperBuilder().modulesToInstall(PostGISModule()).build()
         mapper.setSerializationInclusion(Include.NON_NULL)
         return mapper
     }
 
-    @Bean open fun transactionManager(dataSource: DataSource) = SpringTransactionManager(dataSource)
+    @Bean
+    open fun transactionManager(dataSource: DataSource) = SpringTransactionManager(dataSource)
 
-    @Bean open fun init(ur: UserRepository, mr: MessageRepository) = CommandLineRunner {
+    @Bean
+    open fun init(ur: UserRepository, mr: MessageRepository) = CommandLineRunner {
         ur.createTable()
         mr.createTable()
         mr.deleteAll()

@@ -13,12 +13,10 @@ import org.postgis.Point
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.SpringApplicationConfiguration
+import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType.APPLICATION_JSON_UTF8
 import org.springframework.restdocs.RestDocumentation
 import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
-import org.springframework.test.context.web.WebAppConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup
 import org.springframework.web.context.WebApplicationContext
@@ -30,9 +28,10 @@ import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.restdocs.payload.PayloadDocumentation.*
 import org.springframework.restdocs.request.RequestDocumentation.*
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*
+import org.springframework.test.context.junit4.SpringRunner
 
-@RunWith(SpringJUnit4ClassRunner::class) @WebAppConfiguration
-@SpringApplicationConfiguration(classes = arrayOf(Application::class))
+@RunWith(SpringRunner::class)
+@SpringBootTest
 class MessageControllerTests {
 
     @Rule @JvmField     val restDoc =           RestDocumentation("build/generated-snippets")

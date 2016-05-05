@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 
 @Repository
-@Transactional
+@Transactional // Should be at @Service level in real applications
 open class MessageRepository() {
 
     open fun createTable() = SchemaUtils.create(Messages)
