@@ -6,25 +6,33 @@ import io.spring.messenger.within
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import org.postgis.PGbox2d
+import org.postgis.Point
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 
+interface MessageRepository: CrudRepository<Message, Int>
+
 @Repository
 @Transactional // Should be at @Service level in real applications
-open class MessageRepository() {
+class DefaultMessageRepository() : MessageRepository {
 
-    open fun createTable() = SchemaUtils.create(Messages)
+    override fun createTable() = SchemaUtils.create(Messages)
 
-    open fun create(m: Message): Message {
+    override  fun create(m: Message): Message {
         m.id = Messages.insert(toRow(m)).get(Messages.id)
         return m
     }
 
-    open fun findAll() = Messages.selectAll().map { fromRow(it) }
+    override fun findAll() = Messages.selectAll().map { fromRow(it) }
 
-    open fun findByBoundingBox(box: PGbox2d) = Messages.select { Messages.location within box }.map { fromRow(it) }
+    override fun findByBoundingBox(box: PGbox2d) = Messages.select { Messages.location within box }.map { fromRow(it) }
 
-    open fun deleteAll() = Messages.deleteAll()
+    override fun updateLocation(id:Int, location: Point) {
+        location.srid = 4326
+        Messages.update({ Messages.id eq id}) { it[Messages.location] = location}
+    }
+
+    override fun deleteAll() = Messages.deleteAll()
 
     fun toRow(m: Message): Messages.(UpdateBuilder<*>) -> Unit = {
         if (m.id != null) it[id] = m.id

@@ -12,6 +12,7 @@ import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.Bean
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
 import org.springframework.transaction.annotation.EnableTransactionManagement
 import javax.sql.DataSource
@@ -29,6 +30,9 @@ open class Application {
 
     @Bean
     open fun transactionManager(dataSource: DataSource) = SpringTransactionManager(dataSource)
+
+    @Bean // PersistenceExceptionTranslationPostProcessor with proxyTargetClass=false, see https://github.com/spring-projects/spring-boot/issues/1844
+    open fun persistenceExceptionTranslationPostProcessor() = PersistenceExceptionTranslationPostProcessor()
 
     @Bean
     open fun init(ur: UserRepository, mr: MessageRepository) = CommandLineRunner {

@@ -10,24 +10,29 @@ import org.postgis.Point
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 
+interface UserRepository: CrudRepository<User, String>
+
 @Repository
 @Transactional // Should be at @Service level in real applications
-open class UserRepository() {
+class DefaultUserRepository() : UserRepository {
 
-    open fun createTable() = SchemaUtils.create(Users)
+    override fun createTable() = SchemaUtils.create(Users)
 
-    open fun create(user: User) = Users.insert( toRow(user) )
+    override fun create(user: User): User {
+        Users.insert(toRow(user))
+        return user
+    }
 
-    open fun updateLocation(userName:String, location: Point) = {
+    override fun updateLocation(userName:String, location: Point) {
         location.srid = 4326
         Users.update({Users.userName eq userName}) { it[Users.location] = location}
     }
 
-    open fun findAll() = Users.selectAll().map { fromRow(it) }
+    override fun findAll() = Users.selectAll().map { fromRow(it) }
 
-    open fun findByBoundingBox(box: PGbox2d) = Users.select { Users.location within box }.map { fromRow(it) }
+    override fun findByBoundingBox(box: PGbox2d) = Users.select { Users.location within box }.map { fromRow(it) }
 
-    open fun deleteAll() = Users.deleteAll()
+    override fun deleteAll() = Users.deleteAll()
 
     fun toRow(u: User): Users.(UpdateBuilder<*>) -> Unit = {
         it[userName] = u.userName
