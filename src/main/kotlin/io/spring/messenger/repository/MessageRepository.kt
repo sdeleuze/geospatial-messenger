@@ -11,20 +11,20 @@ import org.springframework.transaction.annotation.Transactional
 
 @Repository
 @Transactional // Should be at @Service level in real applications
-open class MessageRepository() {
+class MessageRepository() {
 
-    open fun createTable() = SchemaUtils.create(Messages)
+    fun createTable() = SchemaUtils.create(Messages)
 
-    open fun create(m: Message): Message {
+    fun create(m: Message): Message {
         m.id = Messages.insert(toRow(m)).get(Messages.id)
         return m
     }
 
-    open fun findAll() = Messages.selectAll().map { fromRow(it) }
+    fun findAll() = Messages.selectAll().map { fromRow(it) }
 
-    open fun findByBoundingBox(box: PGbox2d) = Messages.select { Messages.location within box }.map { fromRow(it) }
+    fun findByBoundingBox(box: PGbox2d) = Messages.select { Messages.location within box }.map { fromRow(it) }
 
-    open fun deleteAll() = Messages.deleteAll()
+    fun deleteAll() = Messages.deleteAll()
 
     fun toRow(m: Message): Messages.(UpdateBuilder<*>) -> Unit = {
         if (m.id != null) it[id] = m.id

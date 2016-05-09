@@ -28,7 +28,8 @@ repositories {
   maven { url 'https://dl.bintray.com/kotlin/kotlin-eap/' }
   maven { url 'https://dl.bintray.com/kotlin/exposed' } // exposed
   maven { url 'https://dl.bintray.com/sdeleuze/maven/' } // postgis-geojson
-  }
+  maven { url 'http://invesdwin.de/artifactory/invesdwin-oss'} // https://github.com/subes/invesdwin-instrument
+    }
 
 jar {
   baseName = 'geospatial-messenger'
@@ -51,8 +52,9 @@ dependencies {
     exclude module: 'spring-boot-starter-validation'
   }
   compile('org.springframework.boot:spring-boot-starter-jdbc')
-  compile('org.springframework.boot:spring-boot-devtools')
 
+  compile('org.springframework:spring-aspects')
+  compile('de.invesdwin:invesdwin-instrument:1.0.0-SNAPSHOT')
 
   compile("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
   compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")

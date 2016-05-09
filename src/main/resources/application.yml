@@ -7,6 +7,9 @@ spring:
     driver-class-name: "org.postgis.DriverWrapper"
     url: "jdbc:postgresql_postGIS://localhost/seb"
     username: "postgres"
+  dao:
+    exceptiontranslation:
+      enabled: false
   mvc:
       async:
         request-timeout: 1000000

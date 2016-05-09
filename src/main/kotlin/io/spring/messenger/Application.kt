@@ -2,6 +2,7 @@ package io.spring.messenger
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include
 import com.fasterxml.jackson.databind.ObjectMapper
+import de.invesdwin.instrument.DynamicInstrumentationLoader
 import io.spring.messenger.domain.Message
 import io.spring.messenger.domain.User
 import io.spring.messenger.repository.MessageRepository
@@ -11,13 +12,16 @@ import org.postgis.geojson.PostGISModule
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.context.annotation.AdviceMode
 import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.ImportResource
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
 import org.springframework.transaction.annotation.EnableTransactionManagement
 import javax.sql.DataSource
 
 @SpringBootApplication
-@EnableTransactionManagement
+@EnableTransactionManagement(mode = AdviceMode.ASPECTJ)
+@ImportResource(locations = arrayOf("classpath:/META-INF/ctx.spring.weaving.xml")) //make @Configurable work
 open class Application {
 
     @Bean
@@ -47,5 +51,7 @@ open class Application {
 }
 
 fun main(args: Array<String>) {
+    DynamicInstrumentationLoader.waitForInitialized(); //dynamically attach java agent to jvm if not already present
+    DynamicInstrumentationLoader.initLoadTimeWeavingContext(); //weave all classes before they are loaded as beans
     SpringApplication.run(Application::class.java, *args)
 }
