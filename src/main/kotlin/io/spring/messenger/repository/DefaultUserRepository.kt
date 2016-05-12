@@ -34,14 +34,14 @@ class DefaultUserRepository() : UserRepository {
 
     override fun deleteAll() = Users.deleteAll()
 
-    fun toRow(u: User): Users.(UpdateBuilder<*>) -> Unit = {
+    private fun toRow(u: User): Users.(UpdateBuilder<*>) -> Unit = {
         it[userName] = u.userName
         it[firstName] = u.firstName
         it[lastName] = u.lastName
         it[location] = u.location
     }
 
-    fun fromRow(r: ResultRow) =
+    private fun fromRow(r: ResultRow) =
         User(r[Users.userName], r[Users.firstName], r[Users.lastName], r[Users.location])
 
 }
