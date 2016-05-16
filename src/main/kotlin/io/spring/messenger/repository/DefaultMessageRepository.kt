@@ -14,7 +14,7 @@ interface MessageRepository: CrudRepository<Message, Int>
 
 @Repository
 @Transactional // Should be at @Service level in real applications
-class DefaultMessageRepository() : MessageRepository {
+class DefaultMessageRepository : MessageRepository {
 
     override fun createTable() = SchemaUtils.create(Messages)
 

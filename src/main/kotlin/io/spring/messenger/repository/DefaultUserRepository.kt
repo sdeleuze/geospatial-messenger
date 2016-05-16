@@ -14,7 +14,7 @@ interface UserRepository: CrudRepository<User, String>
 
 @Repository
 @Transactional // Should be at @Service level in real applications
-class DefaultUserRepository() : UserRepository {
+class DefaultUserRepository: UserRepository {
 
     override fun createTable() = SchemaUtils.create(Users)
 
