@@ -1,12 +1,13 @@
 buildscript {
   ext {
-    springBootVersion = '1.4.0.M2'
+    springBootVersion = '1.4.0.BUILD-SNAPSHOT'
     kotlinVersion = '1.0.2'
     exposedVersion =  '0.5.0'
   }
   repositories {
     mavenCentral()
     maven { url 'http://repo.spring.io/milestone' }
+    maven { url 'http://repo.spring.io/snapshot' }
   }
   dependencies {
     classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -24,6 +25,7 @@ apply plugin: 'spring-boot'
 repositories {
   mavenCentral()
   maven { url 'http://repo.spring.io/milestone' }
+  maven { url 'http://repo.spring.io/snapshot' }
   maven { url 'https://dl.bintray.com/kotlin/exposed' } // exposed
   maven { url 'https://dl.bintray.com/sdeleuze/maven/' } // postgis-geojson
   }
@@ -39,7 +41,6 @@ jar {
 
 ext['snippetsDir'] = file('build/generated-snippets')
 ext['jackson.version'] = '2.7.3'
-ext['spring.version'] = '4.3.0.RC2'
 
 configurations {
   all*.exclude group: 'postgresql', module: 'postgresql'
@@ -64,7 +65,7 @@ dependencies {
   compile('com.github.mayconbordin:postgis-geojson:1.1') // https://github.com/sdeleuze/postgis-geojson
 
   testCompile('org.springframework.boot:spring-boot-starter-test')
-  testCompile('org.springframework.restdocs:spring-restdocs-mockmvc:1.0.1.RELEASE')
+  testCompile('org.springframework.restdocs:spring-restdocs-mockmvc:1.1.0.RC1')
 }
 
 task wrapper(type: Wrapper) {

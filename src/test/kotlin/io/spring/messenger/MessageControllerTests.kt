@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType.APPLICATION_JSON_UTF8
-import org.springframework.restdocs.RestDocumentation
+import org.springframework.restdocs.JUnitRestDocumentation
 import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup
@@ -34,7 +34,7 @@ import org.springframework.test.context.junit4.SpringRunner
 @SpringBootTest
 class MessageControllerTests {
 
-    @Rule @JvmField     val restDoc =           RestDocumentation("build/generated-snippets")
+    @Rule @JvmField     val restDoc =           JUnitRestDocumentation("build/generated-snippets")
     @Autowired lateinit var context:            WebApplicationContext
     @Autowired lateinit var messageRepository:  MessageRepository
     @Autowired lateinit var userRepository:     UserRepository
