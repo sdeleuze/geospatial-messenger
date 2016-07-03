@@ -45,7 +45,7 @@ open class Application {
         ur.create(User("jpinkman", "Jesse", "Pinkman"))
         ur.create(User("wwhite", "Walter", "White"))
         ur.create(User("sgoodman", "Saul", "Goodman"))
-        mr.create(Message("This is a test!", "swhite"))
+        mr.create(Message("I AM THE ONE WHO KNOCKS!", "wwhite"))
     }
 
 }
