@@ -1,6 +1,5 @@
 buildscript {
 
-  extra["exposedVersion"] = "0.5.0"
   extra["kotlinVersion"] = "1.0.4-eap-118"
 
   repositories {
@@ -27,7 +26,6 @@ repositories {
 }
 
 dependencies {
-
   compile("org.springframework.boot:spring-boot-starter-web") {
     exclude(module = "spring-boot-starter-validation")
   }
@@ -39,8 +37,8 @@ dependencies {
   compile("io.projectreactor:reactor-core:3.0.0.RC1")
   compile("com.fasterxml.jackson.module:jackson-module-kotlin:2.7.5")
 
-  compile("org.jetbrains.exposed:exposed:${extra["exposedVersion"]}")
-  compile("org.jetbrains.exposed:spring-transaction:${extra["exposedVersion"]}")
+  compile(exposedModule("exposed"))
+  compile(exposedModule("spring-transaction"))
   compile("org.postgresql:postgresql:9.4.1208")
   compile("net.postgis:postgis-jdbc:2.2.0") {
     exclude(module = "postgresql")
@@ -52,3 +50,5 @@ dependencies {
   testCompile("org.springframework.boot:spring-boot-starter-test")
   testCompile("org.springframework.restdocs:spring-restdocs-mockmvc:1.1.1.RELEASE")
 }
+
+fun exposedModule(val module: String) = "org.jetbrains.exposed:$module:0.5.0"
