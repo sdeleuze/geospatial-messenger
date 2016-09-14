@@ -34,7 +34,6 @@ dependencies {
 
   compile(kotlinModule("stdlib", extra["kotlinVersion"]))
   compile(kotlinModule("reflect", extra["kotlinVersion"]))
-  compile("io.projectreactor:reactor-core:3.0.0.RC1")
   compile("com.fasterxml.jackson.module:jackson-module-kotlin:2.7.5")
 
   compile(exposedModule("exposed"))
@@ -51,4 +50,4 @@ dependencies {
   testCompile("org.springframework.restdocs:spring-restdocs-mockmvc:1.1.1.RELEASE")
 }
 
-fun exposedModule(val module: String) = "org.jetbrains.exposed:$module:0.5.0"
+fun exposedModule(module: String) = "org.jetbrains.exposed:$module:0.5.0"
