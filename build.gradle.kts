@@ -8,7 +8,7 @@ buildscript {
     maven { setUrl("https://dl.bintray.com/kotlin/kotlin-eap") }
   }
   dependencies {
-    classpath(kotlinModule("gradle-plugin", extra["kotlinVersion"]))
+    classpath(kotlinModule("gradle-plugin", extra["kotlinVersion"] as String))
     classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.0.RELEASE")
   }
 }
@@ -32,8 +32,8 @@ dependencies {
   compile("org.springframework.boot:spring-boot-starter-jdbc")
   compile("org.springframework.boot:spring-boot-devtools")
 
-  compile(kotlinModule("stdlib", extra["kotlinVersion"]))
-  compile(kotlinModule("reflect", extra["kotlinVersion"]))
+  compile(kotlinModule("stdlib", extra["kotlinVersion"] as String))
+  compile(kotlinModule("reflect", extra["kotlinVersion"] as String))
   compile("com.fasterxml.jackson.module:jackson-module-kotlin:2.7.5")
 
   compile(exposedModule("exposed"))
