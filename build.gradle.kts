@@ -1,15 +1,14 @@
 buildscript {
 
-  extra["kotlinVersion"] = "1.0.4-eap-118"
+  extra["kotlinVersion"] = "1.1-M02"
 
   repositories {
     mavenCentral()
-    gradleScriptKotlin()
-    maven { setUrl("https://dl.bintray.com/kotlin/kotlin-eap") }
+    maven { setUrl("http://dl.bintray.com/kotlin/kotlin-eap-1.1")}
   }
   dependencies {
     classpath(kotlinModule("gradle-plugin", extra["kotlinVersion"] as String))
-    classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.0.RELEASE")
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.1.RELEASE")
   }
 }
 
@@ -20,9 +19,9 @@ apply {
 
 repositories {
   mavenCentral()
+  maven { setUrl("http://dl.bintray.com/kotlin/kotlin-eap-1.1")}
   maven { setUrl("https://dl.bintray.com/kotlin/exposed") }
   maven { setUrl("https://dl.bintray.com/sdeleuze/maven/") }
-  maven { setUrl("https://dl.bintray.com/kotlin/kotlin-eap") }
 }
 
 dependencies {
@@ -34,7 +33,7 @@ dependencies {
 
   compile(kotlinModule("stdlib", extra["kotlinVersion"] as String))
   compile(kotlinModule("reflect", extra["kotlinVersion"] as String))
-  compile("com.fasterxml.jackson.module:jackson-module-kotlin:2.7.5")
+  compile("com.fasterxml.jackson.module:jackson-module-kotlin:2.8.4")
 
   compile(exposedModule("exposed"))
   compile(exposedModule("spring-transaction"))
