@@ -52,7 +52,7 @@ class UserControllerTests {
     }
 
      @Test fun createUser() {
-        document.snippets(
+        document.document(
             requestFields(
                 fieldWithPath("userName").description("The user username"),
                 fieldWithPath("firstName").description("The user first name"),
@@ -72,7 +72,7 @@ class UserControllerTests {
         userRepository.create(User("swhite", "Skyler", "White"))
         userRepository.create(User("jpinkman", "Jesse", "Pinkman", Point(0.0, 0.0)))
 
-        document.snippets(
+        document.document(
             responseFields(
                 fieldWithPath("[].userName").description("The user username"),
                 fieldWithPath("[].firstName").description("The user first name"),
@@ -86,7 +86,7 @@ class UserControllerTests {
     @Test fun findUsersByBoundingBox() {
         userRepository.create(User("swhite", "Skyler", "White", Point(0.0, 0.0)))
         userRepository.create(User("jpinkman", "Jesse", "Pinkman", Point(1.0, 1.0)))
-        document.snippets(
+        document.document(
              pathParameters(
                 parameterWithName("xMin").description("The latitude of the lower-left corner"),
                 parameterWithName("yMin").description("The longitude of the lower-left corner"),
@@ -107,7 +107,7 @@ class UserControllerTests {
 
      @Test fun updateUserLocation() {
          userRepository.create(User("swhite", "Skyler", "White", Point(0.0, 0.0)))
-         document.snippets(
+         document.document(
              pathParameters(
                 parameterWithName("userName").description("The user username"),
                 parameterWithName("x").description("The new location latitude"),

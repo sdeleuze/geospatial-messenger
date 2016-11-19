@@ -55,7 +55,7 @@ class MessageControllerTests {
         userRepository.create(User("swhite", "Skyler", "White"))
         messageRepository.create(Message("foo", "swhite"))
         messageRepository.create(Message("bar", "swhite", Point(0.0, 0.0)))
-        document.snippets(
+        document.document(
             responseFields(
                 fieldWithPath("[].id").description("The message ID"),
                 fieldWithPath("[].content").description("The message content"),
@@ -68,7 +68,7 @@ class MessageControllerTests {
 
     @Test fun createMessage() {
         userRepository.create(User("swhite", "Skyler", "White"))
-        document.snippets(
+        document.document(
             requestFields(
                 fieldWithPath("content").description("The message content"),
                 fieldWithPath("author").description("The message author username"),
@@ -98,7 +98,7 @@ class MessageControllerTests {
         userRepository.create(User("swhite", "Skyler", "White"))
         messageRepository.create(Message("foo", "swhite", Point(0.0, 0.0)))
         messageRepository.create(Message("bar", "swhite", Point(1.0, 1.0)))
-        document.snippets(
+        document.document(
             pathParameters(
                 parameterWithName("xMin").description("The latitude of the lower-left corner"),
                 parameterWithName("yMin").description("The longitude of the lower-left corner"),
