@@ -1,25 +1,25 @@
 buildscript {
 
-  extra["kotlinVersion"] = "1.1-M02"
+  extra["kotlinVersion"] = "1.1.2-4"
 
   repositories {
     mavenCentral()
-    maven { setUrl("http://dl.bintray.com/kotlin/kotlin-eap-1.1")}
   }
   dependencies {
     classpath(kotlinModule("gradle-plugin", extra["kotlinVersion"] as String))
-    classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.1.RELEASE")
+    classpath(kotlinModule("allopen", extra["kotlinVersion"] as String))
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.3.RELEASE")
   }
 }
 
 apply {
   plugin("kotlin")
-  plugin("spring-boot")
+  plugin("kotlin-spring")
+  plugin("org.springframework.boot")
 }
 
 repositories {
   mavenCentral()
-  maven { setUrl("http://dl.bintray.com/kotlin/kotlin-eap-1.1")}
   maven { setUrl("https://dl.bintray.com/kotlin/exposed") }
   maven { setUrl("https://dl.bintray.com/sdeleuze/maven/") }
 }
@@ -33,7 +33,7 @@ dependencies {
 
   compile(kotlinModule("stdlib", extra["kotlinVersion"] as String))
   compile(kotlinModule("reflect", extra["kotlinVersion"] as String))
-  compile("com.fasterxml.jackson.module:jackson-module-kotlin:2.8.4")
+  compile("com.fasterxml.jackson.module:jackson-module-kotlin")
 
   compile(exposedModule("exposed"))
   compile(exposedModule("spring-transaction"))
@@ -49,4 +49,4 @@ dependencies {
   testCompile("org.springframework.restdocs:spring-restdocs-mockmvc:1.1.1.RELEASE")
 }
 
-fun exposedModule(module: String) = "org.jetbrains.exposed:$module:0.5.0"
+fun exposedModule(module: String) = "org.jetbrains.exposed:$module:0.8"

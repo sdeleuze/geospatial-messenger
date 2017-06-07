@@ -19,23 +19,23 @@ import javax.sql.DataSource
 
 @SpringBootApplication
 @EnableTransactionManagement
-open class Application {
+class Application {
 
     @Bean
-    open fun objectMapper(): ObjectMapper {
+    fun objectMapper(): ObjectMapper {
         val mapper:ObjectMapper = Jackson2ObjectMapperBuilder().modulesToInstall(PostGISModule()).build()
         mapper.setSerializationInclusion(Include.NON_NULL)
         return mapper
     }
 
     @Bean
-    open fun transactionManager(dataSource: DataSource) = SpringTransactionManager(dataSource)
+    fun transactionManager(dataSource: DataSource) = SpringTransactionManager(dataSource)
 
     @Bean // PersistenceExceptionTranslationPostProcessor with proxyTargetClass=false, see https://github.com/spring-projects/spring-boot/issues/1844
-    open fun persistenceExceptionTranslationPostProcessor() = PersistenceExceptionTranslationPostProcessor()
+    fun persistenceExceptionTranslationPostProcessor() = PersistenceExceptionTranslationPostProcessor()
 
     @Bean
-    open fun init(ur: UserRepository, mr: MessageRepository) = CommandLineRunner {
+    fun init(ur: UserRepository, mr: MessageRepository) = CommandLineRunner {
         ur.createTable()
         mr.createTable()
         mr.deleteAll()
