@@ -9,8 +9,8 @@ import io.spring.messenger.repository.UserRepository
 import org.jetbrains.exposed.spring.SpringTransactionManager
 import org.postgis.geojson.PostGISModule
 import org.springframework.boot.CommandLineRunner
-import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
@@ -51,5 +51,5 @@ class Application {
 }
 
 fun main(args: Array<String>) {
-    SpringApplication.run(Application::class.java, *args)
+    runApplication<Application>(*args)
 }

@@ -43,5 +43,3 @@ A Spring Data version based on [spring-data-jdbc-repository](https://github.com/
  - [Exposed issue #24](https://github.com/JetBrains/Exposed/issues/24): see if Exposed could support natively data classes + repository patten.
  - [Spring HATEOAS issue #401](https://github.com/spring-projects/spring-hateoas/issues/401): add HATEOAS support, but without having to extend
    `ResourceSupport` or wrapping it into a `Resource<Foo>` container .
- - [Kotlin issue KT-11235](https://youtrack.jetbrains.com/issue/KT-11235): avoid mandatory usage of `arrayOf` in annotation array attribute
-   (for example in `@SpringApplicationConfiguration(classes = arrayOf(Application::class))`.

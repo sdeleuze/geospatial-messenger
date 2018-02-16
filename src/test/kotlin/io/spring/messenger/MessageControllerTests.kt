@@ -34,13 +34,13 @@ import org.springframework.test.context.junit4.SpringRunner
 @SpringBootTest
 class MessageControllerTests {
 
-    @Rule @JvmField     val restDoc =           JUnitRestDocumentation("build/generated-snippets")
-    @Autowired lateinit var context:            WebApplicationContext
-    @Autowired lateinit var messageRepository:  MessageRepository
-    @Autowired lateinit var userRepository:     UserRepository
-    @Autowired lateinit var mapper:             ObjectMapper
-               lateinit var mockMvc:            MockMvc
-               lateinit var document:           RestDocumentationResultHandler
+    @Rule @JvmField final val restDoc =           JUnitRestDocumentation("build/generated-snippets")
+    @Autowired lateinit   var context:            WebApplicationContext
+    @Autowired lateinit   var messageRepository:  MessageRepository
+    @Autowired lateinit   var userRepository:     UserRepository
+    @Autowired lateinit   var mapper:             ObjectMapper
+               lateinit   var mockMvc:            MockMvc
+               lateinit   var document:           RestDocumentationResultHandler
 
     @Before fun setUp() {
         messageRepository.deleteAll()

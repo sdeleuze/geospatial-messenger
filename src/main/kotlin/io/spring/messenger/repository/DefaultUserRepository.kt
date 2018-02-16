@@ -18,9 +18,9 @@ class DefaultUserRepository: UserRepository {
 
     override fun createTable() = SchemaUtils.create(Users)
 
-    override fun create(user: User): User {
-        Users.insert(toRow(user))
-        return user
+    override fun create(m: User): User {
+        Users.insert(toRow(m))
+        return m
     }
 
     override fun updateLocation(userName:String, location: Point) {

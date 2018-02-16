@@ -19,7 +19,7 @@ class DefaultMessageRepository : MessageRepository {
     override fun createTable() = SchemaUtils.create(Messages)
 
     override  fun create(m: Message): Message {
-        m.id = Messages.insert(toRow(m)).get(Messages.id)
+        m.id = Messages.insert(toRow(m))[Messages.id]
         return m
     }
 
@@ -27,9 +27,9 @@ class DefaultMessageRepository : MessageRepository {
 
     override fun findByBoundingBox(box: PGbox2d) = Messages.select { Messages.location within box }.map { fromRow(it) }
 
-    override fun updateLocation(id:Int, location: Point) {
+    override fun updateLocation(userName:Int, location: Point) {
         location.srid = 4326
-        Messages.update({ Messages.id eq id}) { it[Messages.location] = location}
+        Messages.update({ Messages.id eq userName }) { it[Messages.location] = location}
     }
 
     override fun deleteAll() = Messages.deleteAll()
