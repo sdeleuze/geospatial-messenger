@@ -54,7 +54,7 @@ dependencies {
 	compile("org.jetbrains.kotlin:kotlin-reflect")
 	compile("com.fasterxml.jackson.module:jackson-module-kotlin")
 
-	compile("com.github.mduesterhoeft:spring-boot-starter-exposed:0.1.3")
+	compile("com.github.mduesterhoeft:spring-boot-starter-exposed:0.1.5")
 	compile("org.jetbrains.exposed:spring-transaction:0.9.1")
 	compile("org.postgresql:postgresql:9.4.1208")
 	compile("net.postgis:postgis-jdbc:2.2.0") {

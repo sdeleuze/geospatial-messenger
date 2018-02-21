@@ -35,7 +35,7 @@ class DefaultMessageRepository : MessageRepository {
     override fun deleteAll() = Messages.deleteAll()
 
     private fun toRow(m: Message): Messages.(UpdateBuilder<*>) -> Unit = {
-        if (m.id != null) it[id] = m.id
+        if (m.id != null) it[id] = m.id!!
         it[content] = m.content
         it[author] = m.author
         it[location] = m.location

@@ -10,3 +10,5 @@ spring:
   mvc:
       async:
         request-timeout: 1000000
+  exposed:
+    generate-ddl: true

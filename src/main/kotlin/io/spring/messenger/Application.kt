@@ -2,7 +2,7 @@ package io.spring.messenger
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.md.exposed.ExposedTables
+import com.github.mduesterhoeft.exposed.ExposedTables
 import io.spring.messenger.domain.Message
 import io.spring.messenger.domain.User
 import io.spring.messenger.repository.MessageRepository
