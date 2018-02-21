@@ -1,3 +1,4 @@
+import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.exclude
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -18,7 +19,7 @@ buildscript {
 	dependencies {
 		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
 		classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RC1")
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RC2")
 	}
 }
 
@@ -37,6 +38,7 @@ tasks {
 
 repositories {
 	mavenCentral()
+	maven ("https://jitpack.io")
 	maven("https://repo.spring.io/milestone")
 	maven("https://dl.bintray.com/kotlin/exposed")
 	maven("https://dl.bintray.com/sdeleuze/maven/")
@@ -46,15 +48,14 @@ dependencies {
 	compile("org.springframework.boot:spring-boot-starter-web") {
 		exclude(module = "spring-boot-starter-validation")
 	}
-	compile("org.springframework.boot:spring-boot-starter-jdbc")
 	compile("org.springframework.boot:spring-boot-devtools")
 
 	compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	compile("org.jetbrains.kotlin:kotlin-reflect")
 	compile("com.fasterxml.jackson.module:jackson-module-kotlin")
 
-	compile("org.jetbrains.exposed:exposed:0.8")
-	compile("org.jetbrains.exposed:spring-transaction:0.8")
+	compile("com.github.mduesterhoeft:spring-boot-starter-exposed:0.1.3")
+	compile("org.jetbrains.exposed:spring-transaction:0.9.1")
 	compile("org.postgresql:postgresql:9.4.1208")
 	compile("net.postgis:postgis-jdbc:2.2.0") {
 		exclude(module = "postgresql")
@@ -64,6 +65,6 @@ dependencies {
 	}
 
 	testCompile("org.springframework.boot:spring-boot-starter-test")
-	testCompile("org.springframework.restdocs:spring-restdocs-mockmvc:1.1.1.RELEASE")
+	testCompile("org.springframework.restdocs:spring-restdocs-mockmvc")
 }
 
