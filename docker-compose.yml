@@ -5,14 +5,7 @@ services:
     image: mdillon/postgis
     restart: always
     environment:
-      POSTGRES_PASSWORD: postgres
       POSTGRES_DB: geospatial-messenger
       POSTGRES_USER: postgres
     ports:
       - 5432:5432
-
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
